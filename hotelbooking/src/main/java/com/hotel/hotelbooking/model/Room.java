@@ -34,6 +34,7 @@ public class Room {
     private String description;
     private double price;
     private int capacity;
+    private String avatar;
 
     private boolean isActive;
     private LocalDateTime createdAt;
