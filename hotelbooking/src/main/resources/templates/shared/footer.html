@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <body>
+    <div th:fragment="footer">
+      <footer>
+        <div
+          class="container-fluid text-light footer wow fadeIn"
+          data-wow-delay="0.1s"
+        >
+          <div class="container pb-5">
+            <div class="row g-5">
+              <div class="col-md-6 col-lg-4">
+                <div class="">
+                  <img th:src="@{/img/logo.png}" class="logo" />
+                  <img th:src="@{/img/map.png}" class="map" />
+                  <div class="footer-text">
+                    <p>Located in:</p>
+                    <p>An Thoi, Phu Quoc, Kien Giang, Viet Nam</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <p>Home</p>
+                <p>Gallery</p>
+                <p>Accommodations</p>
+                <p>Dining</p>
+                <p>Experience</p>
+                <p>Events</p>
+              </div>
+              <div class="col-lg-5 col-md-12">
+                <div class="row gy-5 g-4">
+                  <div class="col-md-6">
+                    <p>News</p>
+                    <p>FAQS</p>
+                    <p>Photo & Video</p>
+                    <p>Gift card</p>
+                    <p>Help</p>
+                    <p>Contact us</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="section-title text-start text-uppercase mb-4">
+                      Contact
+                    </h6>
+                    <p>Gmail: abcxyz@jwmarriot.vn</p>
+                    <p>Telephone: 0123456789</p>
+                    <div class="d-flex pt-2">
+                      <a class="btn btn-outline-light btn-social" href=""
+                        ><i class="fab fa-twitter"></i
+                      ></a>
+                      <a class="btn btn-outline-light btn-social" href=""
+                        ><i class="fab fa-facebook-f"></i
+                      ></a>
+                      <a class="btn btn-outline-light btn-social" href=""
+                        ><i class="fab fa-youtube"></i
+                      ></a>
+                      <a class="btn btn-outline-light btn-social" href=""
+                        ><i class="fab fa-linkedin-in"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="copyright">
+              <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                  &copy;
+                  <a class="border-bottom" th:href="@{/...}">Your Site Name</a>,
+                  All Right Reserved. Designed By Group A
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                  <div class="footer-menu">
+                    <a th:href="@{/...}">Home</a>
+                    <a th:href="@{/...}">Cookies</a>
+                    <a th:href="@{/...}">Help</a>
+                    <a th:href="@{/...}">FQAs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

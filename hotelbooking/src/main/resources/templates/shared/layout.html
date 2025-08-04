@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/HomeStyle.css}" rel="stylesheet" />
+    <!-- <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet" />
+    <link
+      th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"
+      rel="stylesheet"
+    />
+    <link
+      th:href="@{/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css}"
+      rel="stylesheet"
+    /> -->
+
+    <title layout:title-pattern="$CONTENT_TITLE - Royal Hotel">
+      Royal Hotel
+    </title>
+    <link rel="icon" type="image/png" th:href="@{/image/logo.png}" />
+  </head>
+
+  <body>
+    <div th:replace="shared/header :: header"></div>
+
+    <main class="" layout:fragment="content">
+      <!-- Nội dung riêng sẽ nhét vào đây -->
+    </main>
+
+    <div th:replace="shared/footer :: footer"></div>
+
+    <!-- JS Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/lib/wow/wow.min.js}"></script>
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+    <script th:src="@{/lib/counterup/counterup.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/tempusdominus/js/moment.min.js}"></script>
+    <script th:src="@{/lib/tempusdominus/js/moment-timezone.min.js}"></script>
+    <script
+      th:src="@{/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"
+    ></script>
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- Script to Auto Close Menu -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+        var navbarCollapse = document.getElementById("navbarCollapse");
+
+        navLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            if (navbarCollapse.classList.contains("show")) {
+              var bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                toggle: true,
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <body>
+    <div th:fragment="header">
+      <header>
+        <!-- Header Start -->
+        <div class="container-fluid bg-dark px-0">
+          <div class="row gx-0">
+            <!-- Top Bar (Email & Social Links) -->
+            <div class="col-lg-12">
+              <div class="row gx-0 bg-white d-none d-lg-flex">
+                <!-- Left: Contact Info -->
+                <div class="col-lg-7 px-5 text-start">
+                  <div class="h-100 d-inline-flex align-items-center py-2 me-4">
+                    <i class="fa fa-envelope text-primary me-2"></i>
+                    <p class="mb-0">projectA@gmail.com</p>
+                  </div>
+                  <div class="h-100 d-inline-flex align-items-center py-2">
+                    <i class="fa fa-phone-alt text-primary me-2"></i>
+                    <p class="mb-0">+000 999 9999</p>
+                  </div>
+                </div>
+                <!-- Right: Social Media -->
+                <div class="col-lg-5 px-5 text-end">
+                  <div class="d-inline-flex align-items-center py-2">
+                    <a class="me-3" href=""
+                      ><i class="fab fa-facebook-f"></i
+                    ></a>
+                    <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="me-3" href=""
+                      ><i class="fab fa-linkedin-in"></i
+                    ></a>
+                    <a class="me-3" href=""><i class="fab fa-instagram"></i></a>
+                    <a href=""><i class="fab fa-youtube"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Logo Section -->
+            <div class="col-3 bg-dark d-none d-lg-block">
+              <a
+                th:href="@{/index.html}"
+                class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center"
+              >
+                <img th:src="@{/img/logo.png}" style="width: 100px" />
+              </a>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav
+              class="col-9 navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0"
+            >
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div
+                class="collapse navbar-collapse justify-content-between"
+                id="navbarCollapse"
+              >
+                <div class="navbar-nav mr-auto py-0">
+                  <a href="Home.html" class="nav-item nav-link active">Home</a>
+                  <a href="Destination.html" class="nav-item nav-link"
+                    >Destination</a
+                  >
+                  <a href="Contact.html" class="nav-item nav-link">Contact</a>
+                  <a href="Block.html" class="nav-item nav-link">Block</a>
+                  <a href="Login.html" class="nav-item nav-link">About</a>
+                  <a href="Login.html" class="nav-item nav-link">Login</a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- Header End -->
+      </header>
+    </div>
+  </body>
+</html>
