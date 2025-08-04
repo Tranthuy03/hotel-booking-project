@@ -29,9 +29,12 @@ public class Room {
 
     private String roomNumber;
     private String roomType;
+    private String bedType;
+    private String viewType;
     private String description;
     private double price;
     private int capacity;
+    private String avatar;
 
     private boolean isActive;
     private LocalDateTime createdAt;
