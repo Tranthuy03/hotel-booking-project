@@ -67,9 +67,11 @@
                 id="navbarCollapse"
               >
                 <div class="navbar-nav mr-auto py-0">
-                  <a href="Home.html" class="nav-item nav-link active">Home</a>
-                  <a href="Destination.html" class="nav-item nav-link"
-                    >Destination</a
+                  <a th:href="@{/home}" class="nav-item nav-link active"
+                    >Home</a
+                  >
+                  <a th:href="@{/room/roomlistpage}" class="nav-item nav-link"
+                    >Rooms</a
                   >
                   <a href="Contact.html" class="nav-item nav-link">Contact</a>
                   <a href="Block.html" class="nav-item nav-link">Block</a>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/layout}"
+>
+  <body>
+    <div layout:fragment="content">
+      <div th:replace="shared/carousel :: carousel"></div>
+
+      <main class="backround">
+        <div class="container-fluid">
+          <div class="wrap py-5">
+            <!-- Filter Buttons with dropdowns -->
+            <div
+              class="filter-bar d-flex flex-wrap align-items-center gap-3 py-3"
+            >
+              <!-- Room Type -->
+              <div class="filter-group position-relative">
+                <button class="filter-btn" onclick="toggleDropdown(this)">
+                  <i class="fas fa-bed me-2"></i> Room Type
+                  <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <div class="dropdown-panel shadow">
+                  <h6>Select 2 or more.</h6>
+                  <span class="pill-option">Suite</span>
+                  <span class="pill-option">Executive </span>
+                  <span class="pill-option">Standard</span>
+                  <div class="clear-all" onclick="clearDropdown(this)">
+                    Clear all
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bed Type -->
+              <div class="filter-group position-relative">
+                <button class="filter-btn" onclick="toggleDropdown(this)">
+                  <i class="fas fa-couch me-2"></i> Bed Type
+                  <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <div class="dropdown-panel shadow">
+                  <h6>Select 2 or more.</h6>
+                  <span class="pill-option">1 Bed</span>
+                  <span class="pill-option">2 Beds</span>
+                  <div class="clear-all" onclick="clearDropdown(this)">
+                    Clear all
+                  </div>
+                </div>
+              </div>
+
+              <!-- View Type -->
+              <div class="filter-group position-relative">
+                <button class="filter-btn" onclick="toggleDropdown(this)">
+                  <i class="fas fa-eye me-2"></i> View Type
+                  <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <div class="dropdown-panel shadow">
+                  <h6>Select 2 or more.</h6>
+                  <span class="pill-option">City View</span>
+                  <span class="pill-option">Sea View</span>
+                  <span class="pill-option">Standard</span>
+                  <div class="clear-all" onclick="clearDropdown(this)">
+                    Clear all
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reset -->
+              <button
+                class="reset-btn btn btn-outline-danger d-flex align-items-center"
+                onclick="resetAll()"
+              >
+                <i class="fas fa-redo-alt me-2"></i> Reset
+              </button>
+            </div>
+
+            <div class="row">
+              <!-- Lặp 4 room card -->
+              <!-- Room Card Template -->
+              <!-- Sao chép từ đây xuống để thêm nhiều card -->
+              <div class="col-md-6 custom-card-spacing">
+                <div class="card p-3 shadow-sm">
+                  <div class="row no-gutters">
+                    <div class="col-md-5">
+                      <div class="hotel-image">
+                        <img
+                          src="image/deluxeSeaView.png"
+                          alt="Room Image"
+                          class="img-fluid"
+                        />
+                        <div class="rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 pl-3">
+                      <h5 class="font-weight-bold">Deluxe Suit Sea View</h5>
+                      <p class="price mb-1">
+                        $50<span class="text-muted">/night</span>
+                      </p>
+                      <p class="mb-2">
+                        <i class="fas fa-user mr-1"></i>1 - 2 Persons
+                        <span class="ml-3"
+                          ><i class="fas fa-bed mr-1"></i>1 Bed</span
+                        >
+                      </p>
+                      <p class="font-weight-semibold mb-1">Amenities</p>
+                      <div class="amenities mb-3">
+                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-tv"></i>
+                        <i class="fas fa-fan"></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a href="#" class="more-link">More detail >></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Room Card 2 (copy from card 1 and customize content) -->
+              <div class="col-md-6 custom-card-spacing">
+                <div class="card p-3 shadow-sm">
+                  <div class="row no-gutters">
+                    <div class="col-md-5">
+                      <div class="hotel-image">
+                        <img
+                          src="image/deluxeSeaView2.png"
+                          alt="Room Image"
+                          class="img-fluid"
+                        />
+                        <div class="rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 pl-3">
+                      <h5 class="font-weight-bold">Deluxe Suit City View</h5>
+                      <p class="price mb-1">
+                        $60<span class="text-muted">/night</span>
+                      </p>
+                      <p class="mb-2">
+                        <i class="fas fa-user mr-1"></i>3 - 4 Persons
+                        <span class="ml-3"
+                          ><i class="fas fa-bed mr-1"></i>2 Beds</span
+                        >
+                      </p>
+                      <p class="font-weight-semibold mb-1">Amenities</p>
+                      <div class="amenities mb-3">
+                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-tv"></i>
+                        <i class="fas fa-fan"></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a href="#" class="more-link">More detail >></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Room Card 3 -->
+              <div class="col-md-6 custom-card-spacing">
+                <div class="card p-3 shadow-sm">
+                  <div class="row no-gutters">
+                    <div class="col-md-5">
+                      <div class="hotel-image">
+                        <img
+                          src="image/grandDeluxeRoom.png"
+                          alt="Room Image"
+                          class="img-fluid"
+                        />
+                        <div class="rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 pl-3">
+                      <h5 class="font-weight-bold">Executive Room City View</h5>
+                      <p class="price mb-1">
+                        $30<span class="text-muted">/night</span>
+                      </p>
+                      <p class="mb-2">
+                        <i class="fas fa-user mr-1"></i>1-2 Person
+                        <span class="ml-3"
+                          ><i class="fas fa-bed mr-1"></i>1 Bed</span
+                        >
+                      </p>
+                      <p class="font-weight-semibold mb-1">Amenities</p>
+                      <div class="amenities mb-3">
+                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-tv"></i>
+                        <i class="fas fa-fan"></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a href="#" class="more-link">More detail >></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Room Card 4 -->
+              <div class="col-md-6 custom-card-spacing">
+                <div class="card p-3 shadow-sm">
+                  <div class="row no-gutters">
+                    <div class="col-md-5">
+                      <div class="hotel-image">
+                        <img
+                          src="image/deluxeWithBathtub2.png"
+                          alt="Room Image"
+                          class="img-fluid"
+                        />
+                        <div class="rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 pl-3">
+                      <h5 class="font-weight-bold">Executive Room City View</h5>
+                      <p class="price mb-1">
+                        $40<span class="text-muted">/night</span>
+                      </p>
+                      <p class="mb-2">
+                        <i class="fas fa-user mr-1"></i>3 - 4 Persons
+                        <span class="ml-3"
+                          ><i class="fas fa-bed mr-1"></i>1 Bed</span
+                        >
+                      </p>
+                      <p class="font-weight-semibold mb-1">Amenities</p>
+                      <div class="amenities mb-3">
+                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-tv"></i>
+                        <i class="fas fa-fan"></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a href="#" class="more-link">More detail >></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Room Card 7 -->
+              <div class="col-md-6 custom-card-spacing">
+                <div class="card p-3 shadow-sm">
+                  <div class="row no-gutters">
+                    <div class="col-md-5">
+                      <div class="hotel-image">
+                        <img
+                          src="image/deluxeWithBathtub.png"
+                          alt="Room Image"
+                          class="img-fluid"
+                        />
+                        <div class="rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 pl-3">
+                      <h5 class="font-weight-bold">Standard Room</h5>
+                      <p class="price mb-1">
+                        $40<span class="text-muted">/night</span>
+                      </p>
+                      <p class="mb-2">
+                        <i class="fas fa-user mr-1"></i>3 - 4 Persons
+                        <span class="ml-3"
+                          ><i class="fas fa-bed mr-1"></i>1 Bed</span
+                        >
+                      </p>
+                      <p class="font-weight-semibold mb-1">Amenities</p>
+                      <div class="amenities mb-3">
+                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-tv"></i>
+                        <i class="fas fa-fan"></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a href="#" class="more-link">More detail >></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Room Card 8 -->
+              <div class="col-md-6 custom-card-spacing">
+                <div class="card p-3 shadow-sm">
+                  <div class="row no-gutters">
+                    <div class="col-md-5">
+                      <div class="hotel-image">
+                        <img
+                          src="image/deluxeGardenView2.png"
+                          alt="Room Image"
+                          class="img-fluid"
+                        />
+                        <div class="rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7 pl-3">
+                      <h5 class="font-weight-bold">Standard Room</h5>
+                      <p class="price mb-1">
+                        $40<span class="text-muted">/night</span>
+                      </p>
+                      <p class="mb-2">
+                        <i class="fas fa-user mr-1"></i>3 - 4 Persons
+                        <span class="ml-3"
+                          ><i class="fas fa-bed mr-1"></i>1 Bed</span
+                        >
+                      </p>
+                      <p class="font-weight-semibold mb-1">Amenities</p>
+                      <div class="amenities mb-3">
+                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-wifi"></i>
+                        <i class="fas fa-tv"></i>
+                        <i class="fas fa-fan"></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a href="#" class="more-link">More detail >></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="pagination-container d-flex justify-content-center my-4"
+            >
+              <nav aria-label="Room pagination">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Script to Auto Close Menu -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+        var navbarCollapse = document.getElementById("navbarCollapse");
+
+        navLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            if (navbarCollapse.classList.contains("show")) {
+              var bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                toggle: true,
+              });
+            }
+          });
+        });
+      });
+    </script>
+
+    <script>
+      // Toggle dropdown
+      function toggleDropdown(button) {
+        const panel = button.nextElementSibling;
+        const allPanels = document.querySelectorAll(".dropdown-panel");
+
+        allPanels.forEach((p) => {
+          if (p !== panel) p.style.display = "none";
+        });
+
+        panel.style.display =
+          panel.style.display === "block" ? "none" : "block";
+      }
+
+      // Toggle active on pill
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("pill-option")) {
+          e.target.classList.toggle("active");
+        }
+      });
+
+      // Clear within dropdown
+      function clearDropdown(clearBtn) {
+        const panel = clearBtn.closest(".dropdown-panel");
+        panel
+          .querySelectorAll(".pill-option")
+          .forEach((p) => p.classList.remove("active"));
+      }
+
+      // Reset all
+      function resetAll() {
+        document
+          .querySelectorAll(".pill-option")
+          .forEach((p) => p.classList.remove("active"));
+      }
+
+      // Close dropdown if clicking outside
+      document.addEventListener("click", function (e) {
+        const isInsideDropdown = e.target.closest(".filter-group");
+        if (!isInsideDropdown) {
+          document
+            .querySelectorAll(".dropdown-panel")
+            .forEach((p) => (p.style.display = "none"));
+        }
+      });
+    </script>
+  </body>
+</html>
