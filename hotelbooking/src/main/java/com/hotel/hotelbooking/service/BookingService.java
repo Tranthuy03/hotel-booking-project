@@ -1,12 +1,13 @@
 package com.hotel.hotelbooking.service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hotel.hotelbooking.model.*;
-import com.hotel.hotelbooking.repository.*;
+import com.hotel.hotelbooking.model.Booking;
+import com.hotel.hotelbooking.repository.BookingRepository;
 
 @Service
 public class BookingService {
@@ -26,7 +27,7 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public void deleteUser(int id) {
+    public void deleteBooking(int id) {
         bookingRepository.deleteById(id);
     }
 }
