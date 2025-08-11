@@ -79,13 +79,17 @@
               <!-- Lặp 4 room card -->
               <!-- Room Card Template -->
               <!-- Sao chép từ đây xuống để thêm nhiều card -->
-              <div class="col-md-6 custom-card-spacing">
+
+              <div
+                class="col-md-6 custom-card-spacing"
+                th:each="room : ${rooms}"
+              >
                 <div class="card p-3 shadow-sm">
                   <div class="row no-gutters">
                     <div class="col-md-5">
                       <div class="hotel-image">
                         <img
-                          src="image/deluxeSeaView.png"
+                          th:src="@{'/uploads/' + ${room.id} + '/' + ${room.images[0].imageUrl}}"
                           alt="Room Image"
                           class="img-fluid"
                         />
@@ -99,28 +103,66 @@
                       </div>
                     </div>
                     <div class="col-md-7 pl-3">
-                      <h5 class="font-weight-bold">Deluxe Suit Sea View</h5>
+                      <h5
+                        class="font-weight-bold"
+                        th:text="${room.roomName}"
+                      ></h5>
                       <p class="price mb-1">
-                        $50<span class="text-muted">/night</span>
+                        $<span th:text="${room.price}" class="text-muted"
+                          >/night</span
+                        >
                       </p>
                       <p class="mb-2">
-                        <i class="fas fa-user mr-1"></i>1 - 2 Persons
+                        <i
+                          class="fas fa-user mr-1"
+                          th:text="${room.capacity}"
+                        ></i>
+                        Persons
                         <span class="ml-3"
-                          ><i class="fas fa-bed mr-1"></i>1 Bed</span
+                          ><i class="fas fa-bed mr-1"></i
+                          ><span th:text="${room.numberOfBed}"></span> Bed</span
                         >
                       </p>
                       <p class="font-weight-semibold mb-1">Amenities</p>
                       <div class="amenities mb-3">
-                        <i class="fas fa-utensils"></i>
-                        <i class="fas fa-wifi"></i>
-                        <i class="fas fa-tv"></i>
-                        <i class="fas fa-fan"></i>
+                        <i
+                          class="fas fa-utensils"
+                          th:if="${#lists.contains(room.amenities, 'Breakfast')}"
+                        ></i>
+                        <i
+                          class="fas fa-wifi"
+                          th:if="${#lists.contains(room.amenities, 'WiFi')}"
+                        ></i>
+                        <i
+                          class="fas fa-tv"
+                          th:if="${#lists.contains(room.amenities, 'TV')}"
+                        ></i>
+                        <i
+                          class="fas fa-fan"
+                          th:if="${#lists.contains(room.amenities, 'Air Conditioning')}"
+                        ></i>
+                        <i
+                          class="fas fa-bath"
+                          th:if="${#lists.contains(room.amenities, 'Bathtub')}"
+                        ></i>
+                        <i
+                          class="fas fa-wine-glass-alt"
+                          th:if="${#lists.contains(room.amenities, 'Mini Bar')}"
+                        ></i>
+                        <i
+                          class="fas fa-umbrella-beach"
+                          th:if="${#lists.contains(room.amenities, 'Balcony')}"
+                        ></i>
                       </div>
                       <div
                         class="d-flex justify-content-between align-items-center"
                       >
                         <button class="btn book-btn btn-sm">BOOK NOW</button>
-                        <a href="#" class="more-link">More detail >></a>
+                        <a
+                          th:href="@{/room/detail/{id}(id=${room.roomId})}"
+                          class="more-link"
+                          >More detail >></a
+                        >
                       </div>
                     </div>
                   </div>

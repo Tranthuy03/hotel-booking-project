@@ -71,4 +71,16 @@ public class RoomController {
         return "room/roomlistpage";
     }
 
+    @GetMapping("/detail/{id}")
+public String roomDetail(@PathVariable int id, Model model) {
+    Optional<Room> roomOpt = roomService.getRoomById(id);
+    
+    if (roomOpt.isEmpty()) {
+        return "redirect:/room"; // Nếu không tìm thấy phòng thì quay về danh sách
+    }
+    
+    model.addAttribute("room", roomOpt.get());
+    return "room/detail"; // đường dẫn tới file templates/room/detail.html
+}
+
 }

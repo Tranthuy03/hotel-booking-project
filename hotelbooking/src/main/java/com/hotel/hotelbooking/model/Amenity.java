@@ -22,7 +22,6 @@ public class Amenity {
     private int amenityId;
 
     private String name;
-    private String iconUrl;
 
     @ManyToMany(mappedBy = "amenities")
     private List<Room> rooms;

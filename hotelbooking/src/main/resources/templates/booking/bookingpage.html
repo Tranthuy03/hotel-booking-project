@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/layout}"
+>
+  <body>
+    <div layout:fragment="content">
+      <div th:replace="shared/carousel :: carousel"></div>
+
+      <main>
+        <div class="booking-container">
+          <h1>Hotel Booking</h1>
+          <form class="booking-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full name</label>
+                <input type="text" placeholder="First Name Last Name" />
+              </div>
+              <div class="form-group">
+                <label>Phone number</label>
+                <input type="text" placeholder="" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Room Type</label>
+                <select>
+                  <option>Please Select</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Number of guest</label>
+                <input type="text" placeholder="e.g. 2-4" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Arrival Date & Time</label>
+                <div class="date-time">
+                  <input type="date" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label> Check In</label>
+                <p>14:00</p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Departure Date</label>
+                <div class="date-time"><input type="date" /></div>
+              </div>
+              <div class="form-group">
+                <label> Check Out</label>
+                <p>12:00</p>
+              </div>
+            </div>
+
+            <!-- <div class="form-row">
+          <div class="form-group">
+            <label>Vehicle Booking</label>
+            <select>
+              <option>Please select a vehicle</option>
+            </select>
+          </div>
+        </div> -->
+
+            <div class="form-row">
+              <div class="form-group pickup">
+                <label>Free Pickup?</label>
+                <div class="radio-group">
+                  <label
+                    ><input type="radio" name="pickup" /> Yes Please! - Pick me
+                    up on arrival</label
+                  >
+                  <label
+                    ><input type="radio" name="pickup" /> No Thanks! - I'll make
+                    my own way there</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label>Special Requests</label>
+                <textarea placeholder="Type here"></textarea>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <button type="submit" class="submit-btn">Booking</button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <!-- Script to Auto Close Menu -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+        var navbarCollapse = document.getElementById("navbarCollapse");
+
+        navLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            if (navbarCollapse.classList.contains("show")) {
+              var bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                toggle: true,
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
