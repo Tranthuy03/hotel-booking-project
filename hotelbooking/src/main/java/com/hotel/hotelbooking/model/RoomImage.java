@@ -23,6 +23,7 @@ public class RoomImage {
     private int imageId;
 
     private String imageUrl;
+    private boolean isAvatar;
     private LocalDateTime createdAt;
 
     @ManyToOne
