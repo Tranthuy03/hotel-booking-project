@@ -25,4 +25,8 @@ public class AmenityService {
     public void deleteAmenity(int id) {
         amenityRepository.deleteById(id);
     }
+
+    public List<Amenity> getAmenitiesByIds(List<Integer> ids) {
+        return amenityRepository.findByAmenityIdIn(ids);
+    }
 }

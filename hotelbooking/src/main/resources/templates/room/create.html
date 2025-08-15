@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html
+  lang="vi"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/adminlayout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add New Room</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div layout:fragment="content">
+      <div class="page-wrapper">
+        <div class="page-title">Add New Room</div>
+
+        <!-- ===== FORM (Spring Boot Binding) ===== -->
+        <form
+          th:action="@{/room/create}"
+          th:object="${room}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <!-- ===== GALLERY (chỉ UI) ===== -->
+          <div class="section">
+            <div class="wrap-gallery-container">
+              <div class="main-column">
+                <div
+                  class="main-image empty"
+                  id="mainBox"
+                  title="Click để chọn ảnh"
+                >
+                  <img id="mainDisplay" alt="" hidden />
+                </div>
+                <button
+                  class="upload-btn"
+                  type="button"
+                  onclick="document.getElementById('fileInput').click();"
+                >
+                  + Upload Image
+                </button>
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  name="images"
+                  onchange="replaceActiveThumbnail(event)"
+                  style="display: none"
+                />
+              </div>
+
+              <div class="thumbnail-grid" id="thumbnailGrid">
+                <div
+                  class="thumbnail active empty"
+                  onclick="setMainImage(this)"
+                >
+                  <img src="" alt="" />
+                </div>
+                <div class="thumbnail empty" onclick="setMainImage(this)">
+                  <img src="" alt="" />
+                </div>
+                <div class="thumbnail empty" onclick="setMainImage(this)">
+                  <img src="" alt="" />
+                </div>
+                <div class="thumbnail empty" onclick="setMainImage(this)">
+                  <img src="" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== FORM INPUTS ===== -->
+          <div class="section">
+            <div class="formwrap">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Room Number</label>
+                  <input
+                    th:field="*{roomNumber}"
+                    type="text"
+                    placeholder="Enter room number"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Room Name</label>
+                  <input
+                    type="text"
+                    th:field="*{roomName}"
+                    placeholder="Enter room name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea
+                    th:field="*{description}"
+                    placeholder="Enter room description"
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Room Type</label>
+                  <select th:field="*{roomType}" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Executive">Executive</option>
+                    <option value="Standard">Standard</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Beds</label>
+                  <select th:field="*{numberOfBed}" required>
+                    <option value="0" disabled selected>-- Select --</option>
+                    <option value="1">1 Bed</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3 Beds</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Type View</label>
+                  <select th:field="*{viewType}" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="Sea View">Sea View</option>
+                    <option value="City View">City View</option>
+                    <option value="Standard View">Standard View</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Capacity</label>
+                  <input
+                    th:field="*{capacity}"
+                    type="number"
+                    min="1"
+                    required
+                  />
+                </div>
+
+                <!-- <div class="form-group">
+                  <label>Status</label>
+                  <select th:field="*{status}" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option
+                      th:value="${T(com.hotel.hotelbooking.model.RoomStatus).AVAILABLE}"
+                    >
+                      Available
+                    </option>
+                    <option
+                      th:value="${T(com.hotel.hotelbooking.model.RoomStatus).OCCUPIED}"
+                    >
+                      Occupied
+                    </option>
+                    <option
+                      th:value="${T(com.hotel.hotelbooking.model.RoomStatus).MAINTENANCE}"
+                    >
+                      Maintenance
+                    </option>
+                  </select>
+                </div> -->
+
+                <div class="form-group">
+                  <label>Price per Night</label>
+                  <div class="input-group" style="max-width: 290px">
+                    <span class="input-group-text">$</span>
+                    <input
+                      th:field="*{price}"
+                      type="text"
+                      class="form-control"
+                      inputmode="decimal"
+                      placeholder="0.00"
+                      required
+                    />
+                  </div>
+                  <small class="text-muted">USD</small>
+                </div>
+              </div>
+
+              <div>
+                <label>Amenities</label><br />
+                <div th:each="amenity : ${allAmenities}">
+                  <input
+                    type="checkbox"
+                    name="amenities"
+                    th:value="${amenity.amenityId}"
+                  />
+                  <span th:text="${amenity.name}"></span>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="save-btn" type="submit">Add Room</button>
+                <a th:href="@{/room}" class="cancel-btn">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- JS và Bootstrap -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        /* Khung ảnh lớn: toggle .empty */
+        function markBoxState() {
+          const box = document.getElementById("mainBox");
+          const img = document.getElementById("mainDisplay");
+          const hasSrc =
+            !img.hidden &&
+            img.getAttribute("src") &&
+            img.getAttribute("src").trim() !== "";
+          box.classList.toggle("empty", !hasSrc);
+        }
+        /* Thumbnail: toggle .empty nếu chưa có src */
+        function markThumbState(thumb) {
+          const img = thumb.querySelector("img");
+          const hasSrc =
+            img.getAttribute("src") && img.getAttribute("src").trim() !== "";
+          thumb.classList.toggle("empty", !hasSrc);
+        }
+        /* Hiển thị ảnh lớn */
+        function showMain(imgSrc) {
+          const img = document.getElementById("mainDisplay");
+          img.style.opacity = 0;
+          if (imgSrc) {
+            img.onload = () => {
+              img.style.opacity = 1;
+              img.hidden = false;
+              markBoxState();
+              img.onload = null;
+            };
+            img.src = imgSrc;
+          } else {
+            img.removeAttribute("src");
+            img.hidden = true;
+            img.style.opacity = 1;
+            markBoxState();
+          }
+        }
+        /* Chọn thumbnail -> ảnh lớn */
+        function setMainImage(el) {
+          const src = el.querySelector("img").getAttribute("src") || "";
+          showMain(src);
+          document
+            .querySelectorAll(".thumbnail")
+            .forEach((t) => t.classList.remove("active"));
+          el.classList.add("active");
+        }
+        /* Upload ảnh -> thay vào thumbnail đang active */
+        function replaceActiveThumbnail(e) {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          if (!/^image\/(png|jpeg|webp|gif)$/i.test(file.type)) {
+            alert("Please choose PNG / JPG / WebP / GIF.");
+            e.target.value = "";
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const src = ev.target.result;
+            let active =
+              document.querySelector(".thumbnail.active") ||
+              document.querySelector(".thumbnail");
+            const img = active.querySelector("img");
+            img.setAttribute("src", src);
+            markThumbState(active);
+            showMain(src);
+            e.target.value = "";
+          };
+          reader.readAsDataURL(file);
+        }
+
+        /* Setup khi load: gắn sự kiện + set trạng thái ô rỗng */
+        (function initGallery() {
+          document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".thumbnail").forEach(markThumbState);
+            markBoxState();
+            document
+              .getElementById("mainBox")
+              .addEventListener("click", () =>
+                document.getElementById("fileInput").click()
+              );
+          });
+        })();
+      </script>
+    </div>
+  </body>
+</html>

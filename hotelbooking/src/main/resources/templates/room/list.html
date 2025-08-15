@@ -1,155 +1,139 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hotel Booking Admin</title>
-
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Font Awesome & Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-
-    <!-- Owl Carousel -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-      rel="stylesheet"
-    />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
-  </head>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/adminlayout}"
+>
   <body>
-    <div class="container list">
-      <div class="row">
-        <div class="col-2">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href=""
-                >Product Management</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="">Category Management</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="">Brand Management</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="">User Management</a>
-            </li>
-          </ul>
+    <div layout:fragment="content">
+      <main class="main">
+        <!-- Top bar -->
+        <div class="topbar">
+          <div class="d-flex align-items-center gap-3">
+            <div class="title text-uppercase">Room Management</div>
+          </div>
+          <div class="user">
+            <i class="bi bi-bell"></i>
+            <span>Admin</span>
+            <div class="avatar">A</div>
+          </div>
         </div>
-        <div class="col-10">
-          <div class="body-content">
-            <section class="ProductList List">
-              <div class="blank"></div>
-              <a
-                th:href="@{/room/create}"
-                type="button"
-                class="btn btn-primary"
-              >
-                + Create new product</a
-              >
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Avatar</th>
-                    <th scope="col">Room Number</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">View</th>
-                    <th scope="col">Capacity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Function</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="room: ${roomList}">
-                    <th scope="row" th:text="${room.roomId}"></th>
-                    <td>
-                      <img
-                        th:src="@{'/img/rooms/'+ ${room.images[0].imageUrl}}"
-                        width="100"
-                        height="70"
-                      />
-                    </td>
-                    <td th:text="${room.roomNumber}"></td>
-                    <td th:text="${room.roomType}"></td>
-                    <td th:text="${room.viewType}"></td>
-                    <td th:text="${room.capacity}"></td>
-                    <td th:text="${room.price}"></td>
-                    <td>
-                      <div
-                        class="btn-group"
-                        role="group"
-                        aria-label="Basic mixed styles example"
-                      >
+
+        <!-- Main Content -->
+        <div class="container-fluid py-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0 fw-bold">Rooms</h5>
+            <a th:href="@{/room/create}" class="btn btn-primary">
+              <i class="bi bi-plus-lg me-1"></i> Add New Room
+            </a>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-3">
+                  <thead>
+                    <tr>
+                      <th>Room ID</th>
+                      <th>Type Room</th>
+                      <th>Type View</th>
+                      <th>Beds</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                      <th class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="room : ${roomList}">
+                      <td class="fw-semibold" th:text="${room.roomId}"></td>
+                      <td th:text="${room.roomType}"></td>
+                      <td th:text="${room.viewType}"></td>
+                      <td th:text="${room.numberOfBed}"></td>
+                      <td
+                        th:text="${#numbers.formatDecimal(room.price, 1, 'COMMA', 2, 'POINT')}"
+                      ></td>
+                      <td>
+                        <span
+                          class="badge status-badge"
+                          th:class="${room.status == 'Available' ? 'bg-success' : 
+                         (room.status == 'Occupied' ? 'bg-danger' : 'bg-warning text-dark')}"
+                          th:text="${room.status}"
+                        ></span>
+                      </td>
+                      <td class="text-end">
                         <a
-                          th:href="@{room/edit/{id}(id=${room.roomId})}"
-                          type="button"
-                          class="btn btn-warning"
+                          th:href="@{'/room/edit/' + ${room.roomId}}"
+                          class="btn btn-sm btn-secondary me-2"
                           >Edit</a
                         >
                         <a
-                          th:href="@{room/delete/{id}(id=${room.roomId})}"
-                          type="button"
-                          class="btn btn-danger"
-                          >Delete</a
+                          th:href="@{'/room/delete/' + ${room.roomId}}"
+                          class="btn btn-sm btn-danger"
+                          th:onclick="'return confirm(\'Are you sure you want to delete room ' + ${room.roomId} + '?\')'"
                         >
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </section>
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+
+                    <!-- If no data -->
+                    <tr th:if="${roomList.isEmpty()}">
+                      <td colspan="7" class="text-center text-muted py-5">
+                        No rooms found.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination -->
+              <nav class="d-flex justify-content-center">
+                <ul class="pagination justify-content-center mb-0">
+                  <!-- Previous -->
+                  <li
+                    class="page-item"
+                    th:classappend="${roomList.first} ? 'disabled'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/room/list(page=${roomList.number - 1}, size=${roomList.size})}"
+                    >
+                      &laquo;
+                    </a>
+                  </li>
+
+                  <!-- Page Numbers -->
+                  <li
+                    th:each="i : ${#numbers.sequence(0, roomList.totalPages - 1)}"
+                    class="page-item"
+                    th:classappend="${i == roomList.number} ? 'active'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/room/list(page=${i}, size=${roomList.size})}"
+                      th:text="${i + 1}"
+                    ></a>
+                  </li>
+
+                  <!-- Next -->
+                  <li
+                    class="page-item"
+                    th:classappend="${roomList.last} ? 'disabled'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/room/list(page=${roomList.number + 1}, size=${roomList.size})}"
+                    >
+                      &raquo;
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
-    <!-- JS Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
-    <script>
-      $(document).ready(function () {
-        $(".vegetable-carousel").owlCarousel({
-          autoplay: true,
-          smartSpeed: 1000,
-          margin: 25,
-          loop: true,
-          center: true,
-          dots: false,
-          nav: true,
-          navText: [
-            '<i class="bi bi-chevron-left"></i>',
-            '<i class="bi bi-chevron-right"></i>',
-          ],
-          responsive: {
-            0: { items: 1 },
-            768: { items: 2 },
-            992: { items: 3 },
-          },
-        });
-      });
-    </script>
   </body>
 </html>
