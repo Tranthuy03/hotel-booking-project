@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+
+    <!-- Bootstrap CSS + Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <link th:href="@{/css/AdminStyle.css}" rel="stylesheet" />
+
+    <title layout:title-pattern="$CONTENT_TITLE - Royal Hotel">
+      Royal Hotel- Admin Page
+    </title>
+    <link rel="icon" type="image/png" th:href="@{/image/logo.png}" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">R</div>
+          <span>HOTEL</span>
+        </div>
+        <nav class="nav flex-column gap-1">
+          <a class="nav-link" th:href="@{/admin/dashboard}"
+            ><i class="bi bi-speedometer2"></i><span>Dashboard</span></a
+          >
+          <a class="nav-link" th:href="@{/room/list}">
+            <i class="bi bi-door-closed"></i><span>Rooms</span>
+          </a>
+
+          <a class="nav-link" href="#"
+            ><i class="bi bi-journal-bookmark"></i><span>Bookings</span></a
+          >
+          <a class="nav-link" href="#"
+            ><i class="bi bi-people"></i><span>Customers</span></a
+          >
+          <a class="nav-link" href="#"
+            ><i class="bi bi-person-badge"></i><span>Staff</span></a
+          >
+          <a class="nav-link" href="#"
+            ><i class="bi bi-gear"></i><span>Settings</span></a
+          >
+        </nav>
+      </aside>
+
+      <main class="" layout:fragment="content">
+        <!-- Nội dung riêng sẽ nhét vào đây -->
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
