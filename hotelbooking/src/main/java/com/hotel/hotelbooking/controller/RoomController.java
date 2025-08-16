@@ -1,6 +1,7 @@
 package com.hotel.hotelbooking.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hotel.hotelbooking.model.Room;
+import com.hotel.hotelbooking.model.RoomStatus;
 import com.hotel.hotelbooking.service.AmenityService;
 import com.hotel.hotelbooking.service.RoomImageService;
 import com.hotel.hotelbooking.service.RoomService;
@@ -64,6 +66,9 @@ public class RoomController {
             room.setAmenities(amenityService.getAmenitiesByIds(amenityIds));
         }
         room.setIsActive(true);
+        room.setStatus(RoomStatus.AVAILABLE);
+        room.setCreatedAt(LocalDateTime.now());
+        room.setUpdatedAt(LocalDateTime.now());
 
         Room savedRoom = roomService.saveRoom(room);
 
@@ -71,7 +76,11 @@ public class RoomController {
             boolean isAvatar = (i == 0);
             roomImageService.saveImage(images[i], savedRoom, isAvatar);
         }
-
+        System.out.println("Số file upload: " + images.length);
+        for (MultipartFile file : images) {
+            System.out.println("File name: " + file.getOriginalFilename());
+            System.out.println("File empty? " + file.isEmpty());
+        }
         return "redirect:/room/list";
     }
 
