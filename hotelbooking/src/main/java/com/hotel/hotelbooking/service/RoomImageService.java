@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,31 +21,46 @@ public class RoomImageService {
     @Autowired
     private RoomImageRepository roomImageRepository;
 
-    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/";
-
     public RoomImage saveImage(MultipartFile file, Room room, boolean isAvatar) throws IOException {
         if (file.isEmpty()) {
             return null;
         }
 
-        // Tạo thư mục lưu file theo roomId
-        String subFolder = "rooms/" + room.getRoomId();
-        Path uploadPath = Paths.get(UPLOAD_DIR, subFolder);
+        // Thư mục gốc lưu file
+        String uploadDir = System.getProperty("user.dir") + "/hotelbooking/uploads/rooms/" + room.getRoomId();
+        Path uploadPath = Paths.get(uploadDir);
+
+        // Tạo thư mục nếu chưa tồn tại
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
+        // Lấy extension của file và tạo tên file mới an toàn
+        String originalFileName = file.getOriginalFilename();
+        String extension = "";
+        if (originalFileName != null && originalFileName.contains(".")) {
+            extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        }
+        String newFileName = UUID.randomUUID().toString() + extension;
+
         // Lưu file vào thư mục
-        String fileName = file.getOriginalFilename();
-        Path filePath = uploadPath.resolve(fileName);
+        Path filePath = uploadPath.resolve(newFileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         // Tạo entity RoomImage và lưu DB
         RoomImage roomImage = new RoomImage();
-        roomImage.setImageUrl("/uploads/" + subFolder + "/" + fileName);
+        roomImage.setImageUrl(newFileName); // chỉ lưu tên file
         roomImage.setAvatar(isAvatar);
         roomImage.setRoom(room);
 
+        System.out.println("Upload path: " + filePath.toAbsolutePath());
+        System.out.println("Saving file: " + newFileName);
+
+        System.out.println("Upload path: " + uploadPath.toAbsolutePath());
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+            System.out.println("Thư mục được tạo: " + uploadPath.toAbsolutePath());
+        }
         return roomImageRepository.save(roomImage);
     }
 }
