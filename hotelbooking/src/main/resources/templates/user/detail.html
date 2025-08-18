@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/adminlayout}"
+>
+  <body>
+    <div layout:fragment="content">
+      <!-- Main -->
+      <main class="main">
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="title">CUSTOMER INFORMATION</div>
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-bell"></i>
+            <div class="avatar">A</div>
+          </div>
+        </div>
+
+        <div class="container-fluid py-4">
+          <!-- Breadcrumb + Actions -->
+          <div
+            class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3"
+          >
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><span>Customers</span></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+              </ol>
+            </nav>
+            <div class="d-flex gap-2">
+              <a class="btn btn-outline-secondary btn-icon" href="#">
+                <i class="bi bi-arrow-left"></i> Back
+              </a>
+              <button
+                class="btn btn-success btn-icon"
+                type="submit"
+                form="editForm"
+              >
+                <i class="bi bi-check2-circle"></i> Save Changes
+              </button>
+              <button
+                class="btn btn-outline-secondary btn-icon"
+                type="reset"
+                form="editForm"
+              >
+                <i class="bi bi-arrow-counterclockwise"></i> Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Top 3-column layout -->
+          <form id="editForm" class="row g-3">
+            <!-- Left: Profile -->
+            <div class="col-12 col-lg-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="text-center">
+                    <div class="profile-avatar">👤</div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Full name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="name"
+                      value="John Doe"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      value="johndoe@email.com"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="phone"
+                      value="+1234567990"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Middle: Details -->
+            <div class="col-12 col-lg-6">
+              <div class="card h-100 card-color">
+                <div class="card-body">
+                  <div class="row gy-3">
+                    <div class="col-12 col-md-6">
+                      <label class="form-label">Customer ID</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="id"
+                        value="CUS12345"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label">Status</label>
+                      <select class="form-select" name="status">
+                        <option value="Active" selected>Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="VIP">VIP</option>
+                        <option value="Blacklisted">Blacklisted</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label">Member since</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        name="since"
+                        value="2022-04-01"
+                      />
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label">Tags</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="tags"
+                        value="vip, direct-booking"
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Address</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="address"
+                        placeholder="Street, City, Country"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Upcoming booking -->
+            <div class="col-12 col-lg-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-calendar2-event"></i>
+                    <div class="section-title mb-0">Upcoming Booking</div>
+                  </div>
+                  <div class="room-thumb"></div>
+                  <a href="#" class="fw-semibold text-decoration-none">BK004</a>
+                  <div class="muted">Deluxe Room</div>
+                  <div class="d-flex gap-3 mt-2">
+                    <div class="small">
+                      <i class="bi bi-box-arrow-in-right me-1"></i>18/01/2025
+                    </div>
+                    <div class="small">
+                      <i class="bi bi-box-arrow-right me-1"></i>21/01/2025
+                    </div>
+                  </div>
+                  <span class="badge bg-success mt-3">Confirmed</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom: Booking history -->
+            <div class="col-12 col-lg-3">
+              <div class="card mini-list h-100">
+                <div class="card-body">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-clock-history"></i>
+                    <div class="section-title mb-0">Booking History</div>
+                  </div>
+                  <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between">
+                      BK001 <span class="badge bg-success">Confirmed</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                      BK002 <span class="badge bg-primary">Completed</span>
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between mb-0"
+                    >
+                      BK003 <span class="badge bg-danger">Cancelled</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <i class="bi bi-table"></i>
+                    <div class="section-title mb-0">Booking History</div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                      <thead>
+                        <tr>
+                          <th>Booking ID</th>
+                          <th>Room</th>
+                          <th>Check-in</th>
+                          <th>Check-out</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>BK001</td>
+                          <td>Deluxe Room</td>
+                          <td>2024-07-15</td>
+                          <td>2024-07-20</td>
+                          <td>
+                            <span class="badge bg-success">Confirmed</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>BK002</td>
+                          <td>Standard Room</td>
+                          <td>2024-05-10</td>
+                          <td>2024-05-15</td>
+                          <td>
+                            <span class="badge bg-primary">Completed</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>BK003</td>
+                          <td>Suite</td>
+                          <td>2024-03-20</td>
+                          <td>2024-03-22</td>
+                          <td>
+                            <span class="badge bg-danger">Cancelled</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile actions -->
+            <div class="col-12 d-lg-none">
+              <div class="d-grid gap-2">
+                <button
+                  class="btn btn-success btn-icon"
+                  type="submit"
+                  form="editForm"
+                >
+                  <i class="bi bi-check2-circle"></i> Save Changes
+                </button>
+                <button
+                  class="btn btn-outline-secondary btn-icon"
+                  type="reset"
+                  form="editForm"
+                >
+                  <i class="bi bi-arrow-counterclockwise"></i> Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/adminlayout}"
+>
+  <body>
+    <div layout:fragment="content">
+      <!-- Main -->
+      <main class="main">
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="d-flex align-items-center gap-3">
+            <div class="title text-uppercase">Booking Details</div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-bell text-white"></i>
+            <div class="avatar">A</div>
+          </div>
+        </div>
+
+        <div class="container-fluid py-4">
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item">
+                <a href="BookingManagement.html">Bookings</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Edit Booking
+              </li>
+            </ol>
+          </nav>
+
+          <!-- Form card -->
+          <div class="card">
+            <div class="card-body">
+              <form id="editBookingForm" novalidate>
+                <div class="row g-3">
+                  <div class="col-12 col-lg-6">
+                    <label class="form-label">Booking ID</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="bookingId"
+                      readonly
+                      value="BK001"
+                    />
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <label class="form-label">Customer Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="customerName"
+                      placeholder="Customer full name"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter customer name.
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <label class="form-label">Room</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="roomName"
+                      placeholder="e.g. Deluxe Room, Suite..."
+                      required
+                    />
+                    <div class="invalid-feedback">Please enter room name.</div>
+                  </div>
+
+                  <!-- Guests -->
+                  <div class="col-6 col-md-3 col-lg-2">
+                    <label class="form-label">Guests</label>
+                    <input
+                      type="number"
+                      min="1"
+                      class="form-control"
+                      id="guests"
+                      value="2"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Guests must be at least 1.
+                    </div>
+                  </div>
+
+                  <!-- Quick set status -->
+                  <div class="col-6 col-md-9 col-lg-4">
+                    <label class="form-label d-flex align-items-center gap-2">
+                      <span>Status</span>
+                    </label>
+
+                    <!-- hidden input for submitting -->
+                    <input
+                      type="hidden"
+                      id="statusValue"
+                      name="status"
+                      value="Confirmed"
+                    />
+
+                    <div class="status-group d-flex nowrap-row">
+                      <button
+                        type="button"
+                        class="btn btn-sm status-btn status-confirmed active"
+                        data-status="Confirmed"
+                      >
+                        <i class="bi bi-check-circle me-1"></i> Confirmed
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm status-btn status-pending"
+                        data-status="Pending"
+                      >
+                        <i class="bi bi-hourglass-split me-1"></i> Pending
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm status-btn status-cancelled"
+                        data-status="Cancelled"
+                      >
+                        <i class="bi bi-x-circle me-1"></i> Cancelled
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /Quick set status -->
+
+                  <div class="col-12 col-lg-3">
+                    <label class="form-label">Check-in</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="checkIn"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please choose check-in date.
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-3">
+                    <label class="form-label">Check-out</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="checkOut"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Check-out must be after or equal to check-in.
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label">Notes</label>
+                    <textarea
+                      class="form-control"
+                      id="notes"
+                      rows="3"
+                      placeholder="Optional notes..."
+                    ></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- actions -->
+
+          <div class="action-buttons">
+            <a href="" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left"></i> Cancel
+            </a>
+            <button class="btn btn-danger btn-icon" id="btnOpenDeleteModal">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+            <button class="btn btn-primary btn-icon" id="btnSave">
+              <i class="bi bi-save"></i> Save
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

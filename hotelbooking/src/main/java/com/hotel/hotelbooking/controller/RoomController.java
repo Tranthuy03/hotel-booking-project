@@ -1,9 +1,14 @@
 package com.hotel.hotelbooking.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,8 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hotel.hotelbooking.model.Amenity;
 import com.hotel.hotelbooking.model.Room;
+import com.hotel.hotelbooking.model.RoomImage;
 import com.hotel.hotelbooking.model.RoomStatus;
 import com.hotel.hotelbooking.service.AmenityService;
 import com.hotel.hotelbooking.service.RoomImageService;
@@ -84,21 +92,71 @@ public class RoomController {
         return "redirect:/room/list";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editRoomForm(@PathVariable int id, Model model) {
-        Optional<Room> roomOpt = roomService.getRoomById(id);
-        if (roomOpt.isPresent()) {
-            model.addAttribute("room", roomOpt.get());
-            return "room/edit";
-        }
-        return "redirect:/room/list";
+    @GetMapping("/room/edit/{id}")
+    public String editRoom(@PathVariable("id") int id, Model model) {
+        Room room = roomService.getRoomById(id)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        model.addAttribute("room", room);
+        model.addAttribute("allAmenities", amenityService.getAllAmenities());
+        model.addAttribute("roomId", room.getRoomId());
+        return "room/edit";
     }
 
-    @PostMapping("/edit/{id}")
-    public String editRoom(@PathVariable int id, @ModelAttribute("room") Room room) {
-        room.setRoomId(id);
-        roomService.saveRoom(room);
-        return "redirect:/room/list";
+    @PostMapping("/room/update/{id}")
+    public String updateRoom(
+            @PathVariable("id") int id,
+            @ModelAttribute("room") Room roomForm,
+            @RequestParam(value = "amenities", required = false) List<Integer> amenityIds,
+            @RequestParam(value = "images", required = false) List<MultipartFile> files,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            Room room = roomService.getRoomById(id)
+                    .orElseThrow(() -> new RuntimeException("Room not found"));
+
+            // Cập nhật các field cơ bản
+            room.setRoomName(roomForm.getRoomName());
+            room.setRoomNumber(roomForm.getRoomNumber());
+            room.setRoomType(roomForm.getRoomType());
+            room.setNumberOfBed(roomForm.getNumberOfBed());
+            room.setViewType(roomForm.getViewType());
+            room.setDescription(roomForm.getDescription());
+            room.setPrice(roomForm.getPrice());
+            room.setCapacity(roomForm.getCapacity());
+            room.setUpdatedAt(LocalDateTime.now());
+
+            // Amenities
+            if (amenityIds != null) {
+                List<Amenity> amenities = amenityService.getAmenitiesByIds(amenityIds);
+                room.setAmenities(amenities);
+            } else {
+                room.setAmenities(new ArrayList<>());
+            }
+
+            // Upload ảnh mới (nếu có)
+            if (files != null) {
+                for (MultipartFile file : files) {
+                    if (!file.isEmpty()) {
+                        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                        Path path = Paths.get("uploads/rooms/" + fileName);
+                        Files.createDirectories(path.getParent());
+                        Files.write(path, file.getBytes());
+
+                        RoomImage img = new RoomImage();
+                        img.setImageUrl(fileName);
+                        img.setRoom(room);
+                        room.getImagesList().add(img);
+                    }
+                }
+            }
+
+            roomService.saveRoom(room);
+            redirectAttributes.addFlashAttribute("success", "Room updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Update failed: " + e.getMessage());
+        }
+        return "redirect:/room";
     }
 
     @GetMapping("/delete/{id}")
