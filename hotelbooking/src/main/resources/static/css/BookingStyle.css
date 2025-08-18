@@ -1,0 +1,137 @@
+/* EditBooking.html */
+/* Quick set buttons */
+
+.status-group {
+  gap: 0.5rem;
+}
+.status-group .status-btn {
+  border-radius: 999px;
+  font-weight: 600;
+  background: #fff;
+  white-space: nowrap;
+  padding: 0.35rem 0.8rem;
+  transition: all 0.15s ease;
+}
+
+/* Default border + text color */
+.status-confirmed {
+  border: 2px solid #198754;
+  color: #198754;
+}
+.status-pending {
+  border: 2px solid #ffc107;
+  color: #ffc107;
+}
+.status-cancelled {
+  border: 2px solid #dc3545;
+  color: #dc3545;
+}
+
+/* Hover: vẫn giữ border, chỉ đổi nền và chữ */
+.status-btn:hover.status-confirmed {
+  background: rgba(25, 135, 84, 0.1);
+}
+.status-btn:hover.status-pending {
+  background: rgba(255, 193, 7, 0.15);
+}
+.status-btn:hover.status-cancelled {
+  background: rgba(220, 53, 69, 0.1);
+}
+
+/* Active states */
+.status-btn.active.status-confirmed {
+  background: #198754;
+  color: #fff;
+}
+.status-btn.active.status-pending {
+  background: #ffc107;
+  color: #000;
+}
+.status-btn.active.status-cancelled {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* Single row, no wrap */
+.nowrap-row {
+  flex-wrap: nowrap !important;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  --bs-breadcrumb-divider: "›";
+}
+.breadcrumb a {
+  text-decoration: none;
+}
+/* button */
+/* Container chứa 3 nút */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end; /* đẩy sang phải */
+  gap: 8px; /* khoảng cách giữa các nút */
+  margin-top: 15px; /* cách phần trên */
+  margin-right: 15px; /* cách lề phải */
+  padding: 5px 0; /* padding trên/dưới */
+}
+
+/* Nút gọn hơn */
+.action-buttons .btn {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+@media (max-width: 992px) {
+  :root {
+    --sidebar-w: 80px;
+  }
+  .sidebar span {
+    display: none;
+  }
+  .sidebar .nav-link {
+    justify-content: center;
+  }
+}
+/* Booking ID */
+#bookingTable th:nth-child(1),
+#bookingTable td:nth-child(1) {
+  width: 90px;
+}
+
+/* Customer Name */
+#bookingTable th:nth-child(2),
+#bookingTable td:nth-child(2) {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Room */
+#bookingTable th:nth-child(3),
+#bookingTable td:nth-child(3) {
+  width: 150px;
+}
+
+/* Check-in & Check-out */
+#bookingTable th:nth-child(4),
+#bookingTable td:nth-child(4),
+#bookingTable th:nth-child(5),
+#bookingTable td:nth-child(5) {
+  width: 100px;
+}
+
+/* Status */
+#bookingTable th:nth-child(6),
+#bookingTable td:nth-child(6) {
+  width: 100px;
+  text-align: center;
+}
+
+/* Actions */
+#bookingTable th:nth-child(7),
+#bookingTable td:nth-child(7) {
+  width: 250px;
+  text-align: center;
+}

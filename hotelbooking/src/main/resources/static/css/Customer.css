@@ -1,0 +1,147 @@
+/* *****************************************************CustomerDetail.css *************************************/
+.section-title {
+  font-weight: 800;
+  font-size: 1rem;
+}
+.muted {
+  color: var(--muted);
+}
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 0.8rem;
+}
+
+/* Profile avatar block */
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #cbd5ff, #a5b4fc);
+  display: grid;
+  place-items: center;
+  color: #334155;
+  font-size: 42px;
+  font-weight: 800;
+  margin: 0 auto 0.75rem;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+  border-radius: 12px;
+}
+.form-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Upcoming */
+.room-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  background: url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop")
+    center/cover no-repeat;
+  margin-bottom: 0.75rem;
+}
+/* ............................................................................................................ */
+/* **************************************CustomerManagement.css************************************************ */
+
+/* Card/Table */
+card
+
+.blacklisted-row > *:not(:last-child) {
+  background-color: #eef0f2 !important;
+  color: #7a8088 !important;
+}
+.table-hover > tbody > tr.blacklisted-row:hover > *:not(:last-child) {
+  background-color: #eef0f2 !important;
+  color: #7a8088 !important;
+}
+.blacklisted-row .badge {
+  background-color: #6c757d !important;
+  color: #fff !important;
+}
+
+.form-check-input {
+  accent-color: #001a3b;
+}
+.blacklisted-row .form-check-input {
+  accent-color: #6c757d;
+}
+
+.filter-toolbar {
+  /* background:#001a3b; */
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+.filter-toolbar .input-group-text {
+  border-right: 0;
+  background: #f8fafc;
+}
+.filter-toolbar .form-control {
+  border-left: 0;
+}
+.filter-toolbar .form-select,
+.filter-toolbar .form-control {
+  border-radius: 0.75rem;
+}
+.filter-toolbar .input-group > .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.filter-toolbar .input-group > .input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+}
+
+.btn-outline-secondary.btn-icon {
+  background: #fff;
+}
+
+/* Fix co giãn cột khi đổi trạng thái */
+#customerTable {
+  table-layout: fixed;
+}
+#customerTable th:nth-child(6),
+#customerTable td:nth-child(6) {
+  width: 120px;
+}
+#customerTable th:nth-child(7),
+#customerTable td:nth-child(7) {
+  width: 100px;
+}
+#customerTable th:nth-child(8),
+#customerTable td:nth-child(8) {
+  width: 110px;
+}
+.status-cell .badge {
+  display: inline-block;
+  min-width: 88px;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  :root {
+    --sidebar-w: 80px;
+  }
+  .sidebar span {
+    display: none;
+  }
+  .sidebar .nav-link {
+    justify-content: center;
+  }
+}

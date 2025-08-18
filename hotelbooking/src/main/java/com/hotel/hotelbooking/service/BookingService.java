@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hotel.hotelbooking.model.Booking;
@@ -29,5 +31,9 @@ public class BookingService {
 
     public void deleteBooking(int id) {
         bookingRepository.deleteById(id);
+    }
+
+    public Page<Booking> getAllBookings(Pageable pageable) {
+        return bookingRepository.findAll(pageable);
     }
 }

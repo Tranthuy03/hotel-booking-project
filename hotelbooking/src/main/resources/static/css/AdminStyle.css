@@ -1,59 +1,57 @@
+/****************************************************Dung chung cho cac trang admin nha */
 :root {
   --sidebar-w: 240px;
+  --dark-blue: #001a3b;
+  --accent-blue: #2b68d6;
+  --amber: #ffc107;
 }
+
 body {
-  background: #f3f5f7;
+  background: #fff;
 }
 .app {
   display: flex;
   min-height: 100vh;
 }
-#pager {
-  justify-content: center;
-}
-/* ===== Sidebar ===== */
+
+/* Sidebar */
+/* Sidebar */
 .sidebar {
   width: var(--sidebar-w);
-  background: #0f2e5d;
+  background: var(--dark-blue);
   color: #cfe1ff;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   padding: 1rem 0.75rem;
 }
-.brand {
+
+.logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin: 0.25rem 0.25rem 1rem;
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  padding-left: 15px;
 }
-.brand .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: #1a4aa0;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-weight: 800;
+.logo img {
+  width: 70px;
+  height: auto;
+  object-fit: cover; /* cắt phần thừa để ảnh luôn đầy */
 }
+
 .sidebar .nav-link {
-  color: #cfe1ff;
+  color: #fff;
   border-radius: 0.5rem;
   padding: 0.6rem 0.75rem;
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
+
 .sidebar .nav-link:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  color: #be9c52;
 }
 .sidebar .nav-link.active {
-  background: #1f57d6;
+  background: #be9c52;
   color: #fff;
 }
 .sidebar .nav-link.static {
@@ -64,119 +62,130 @@ body {
   background: #1f57d6;
   color: #fff;
 }
-/* ===== Content + Topbar ===== */
+/* Main + Topbar */
 .main {
   flex: 1;
   padding: 0;
   min-width: 0;
 }
-.main table {
-  width: 100%;
-  table-layout: fixed; /* tránh cột bị co kéo lung tung */
-}
 .topbar {
-  height: 64px;
-  background: #2b68d6;
-  color: #fff;
+  height: 90px;
+  background-color: #fff;
+  color: #001a3b;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem 0 1.25rem;
+  /* margin-left: 50px; */
+  padding-right: 50px;
 }
 .topbar .title {
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: 0.3px;
-}
-.topbar .user {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  padding-left: 10px;
 }
 .avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #ffc107;
+  background: #be9c52;
   display: grid;
   place-items: center;
   color: #1a1a1a;
   font-weight: 700;
 }
-/* ===== Card/Bảng/Badge/Phân trang ===== */
+
+/* Card/Table */
 .card {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   border: 0;
 }
-.status-badge {
+table {
+  width: 100%; /* hoặc min-width nếu cần */
+  table-layout: fixed;
+}
+.table th {
+  color: #ffffff;
+  font-weight: 700;
+  background-color: #be9c52;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  white-space: normal; /* Cho phép xuống dòng */
+  overflow-wrap: anywhere; /* Bẻ từ dài */
+  word-break: break-word; /* Tránh tràn ngang */
+}
+table td {
+  background-color: #fce5b5;
+}
+.table .btn {
+  padding: 0.275rem 0.65rem;
+  font-size: 0.8rem;
+}
+
+/* Actions: canh giữa & tự wrap */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Filter toolbar */
+.filter-toolbar {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+.filter-toolbar .input-group-text {
+  border-right: 0;
+  background: #f8fafc;
+}
+.filter-toolbar .form-control {
+  border-left: 0;
+}
+.filter-toolbar .form-select,
+.filter-toolbar .form-control {
+  border-radius: 0.75rem;
+}
+.filter-toolbar .input-group > .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.filter-toolbar .input-group > .input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* Add-button */
+.Add-button {
+  text-align: right;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
   font-weight: 600;
 }
-.pagination .page-link {
-  border-radius: 0.5rem;
+.btn-primary.btn-icon {
+  background: #be9c52;
+  border-color: var(--dark-blue);
 }
-.table th {
-  color: #6b7280;
-  font-weight: 700;
+.btn-outline-secondary.btn-icon {
+  background: #fff;
 }
-.table td,
-.table th {
-  vertical-align: middle;
+
+html,
+body {
+  overflow-x: hidden;
 }
-#roomsTable {
-  table-layout: fixed;
-  width: 100%;
-}
-#roomsTable th,
-#roomsTable td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#roomsTable th:nth-child(1),
-#roomsTable td:nth-child(1) {
-  width: 9%;
-}
-#roomsTable th:nth-child(2),
-#roomsTable td:nth-child(2) {
-  width: 18%;
-}
-#roomsTable th:nth-child(3),
-#roomsTable td:nth-child(3) {
-  width: 18%;
-}
-#roomsTable th:nth-child(4),
-#roomsTable td:nth-child(4) {
-  width: 12%;
-}
-#roomsTable th:nth-child(5),
-#roomsTable td:nth-child(5) {
-  width: 12%;
-}
-#roomsTable th:nth-child(6),
-#roomsTable td:nth-child(6) {
-  width: 14%;
-}
-#roomsTable th:nth-child(7),
-#roomsTable td:nth-child(7) {
-  width: 17%;
-  overflow: visible;
-}
-.card .card-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 72vh;
-}
-.card .card-body .table-responsive {
-  flex: 1 1 auto;
-}
-.card .card-body > nav {
-  margin-top: auto;
-}
-#roomsTable th,
-#roomsTable td {
-  padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
-}
+
 @media (max-width: 992px) {
   :root {
     --sidebar-w: 80px;
@@ -188,6 +197,9 @@ body {
     justify-content: center;
   }
 }
+
+/* ************************************************************************Ket thuc dung chung cho trang Admin */
+
 /* ==== Page Layout ==== */
 body {
   font-family: Arial, sans-serif;

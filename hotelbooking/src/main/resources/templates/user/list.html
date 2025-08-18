@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/adminlayout}"
+>
+  <body>
+    <div layout:fragment="content">
+      <!-- Main -->
+      <main class="main">
+        <div class="topbar">
+          <div class="d-flex align-items-center gap-3">
+            <div class="title text-uppercase">Customer Management</div>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-bell text-white"></i>
+            <div class="avatar">A</div>
+          </div>
+        </div>
+
+        <div class="container-fluid py-4">
+          <div class="Add-button">
+            <a href="NewBooking.html" class="btn btn-primary btn-icon">
+              <i class="bi bi-plus-lg"></i> Add New Customer
+            </a>
+          </div>
+          <!-- Filter toolbar -->
+          <div class="filter-toolbar mb-3">
+            <div class="row g-2 align-items-center">
+              <div class="col-12 col-md-5">
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-search"></i
+                  ></span>
+                  <input
+                    type="text"
+                    id="searchKeyword"
+                    class="form-control"
+                    placeholder="Search by Name / Email / Phone..."
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-funnel"></i
+                  ></span>
+                  <select id="filterStatus" class="form-select">
+                    <option value="">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="VIP">VIP</option>
+                    <option value="Blacklisted">Blacklisted</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <button
+                  id="resetFilter"
+                  class="btn btn-outline-secondary w-100 btn-icon"
+                >
+                  <i class="bi bi-x-circle"></i> Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  class="table table-hover align-middle mb-3"
+                  id="customerTable"
+                >
+                  <thead>
+                    <tr>
+                      <th>Customer ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Total Bookings</th>
+                      <th>Status</th>
+                      <th class="text-center">Edit</th>
+                      <th class="text-center">Blacklist</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>CUS001</td>
+                      <td>Johnathan Alexander Doe</td>
+                      <td>johnathan.doe@example.com</td>
+                      <td>+1 202-555-0134</td>
+                      <td>12</td>
+                      <td class="status-cell" data-original-status="Active">
+                        <span class="badge bg-success">Active</span>
+                      </td>
+                      <td class="text-center">
+                        <a
+                          th:href="@{/user/detail}"
+                          class="btn btn-sm btn-info text-white"
+                          ><i class="bi bi-eye"></i> Edit</a
+                        >
+                      </td>
+                      <td class="text-center">
+                        <input
+                          type="checkbox"
+                          class="form-check-input blacklist-checkbox"
+                        />
+                      </td>
+                    </tr>
+                    <!-- Thêm nhiều hàng mẫu ở đây -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination -->
+              <nav class="d-flex justify-content-center">
+                <ul class="pagination justify-content-center mb-0">
+                  <!-- Previous -->
+                  <li
+                    class="page-item"
+                    th:classappend="${userList.first} ? 'disabled'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/room/list(page=${userList.number - 1}, size=${userList.size})}"
+                    >
+                      &laquo;
+                    </a>
+                  </li>
+
+                  <!-- Page Numbers -->
+                  <li
+                    th:each="i : ${#numbers.sequence(0, userList.totalPages - 1)}"
+                    class="page-item"
+                    th:classappend="${i == userList.number} ? 'active'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/room/list(page=${i}, size=${userList.size})}"
+                      th:text="${i + 1}"
+                    ></a>
+                  </li>
+
+                  <!-- Next -->
+                  <li
+                    class="page-item"
+                    th:classappend="${userList.last} ? 'disabled'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/room/list(page=${userList.number + 1}, size=${userList.size})}"
+                    >
+                      &raquo;
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document
+        .querySelectorAll("#customerTable .blacklist-checkbox")
+        .forEach((cb) => {
+          cb.addEventListener("change", function () {
+            const row = this.closest("tr");
+            const statusCell = row.querySelector(".status-cell");
+            const originalStatus = statusCell.dataset.originalStatus;
+            if (this.checked) {
+              row.classList.add("blacklisted-row");
+              statusCell.innerHTML =
+                '<span class="badge bg-secondary">Inactive</span>';
+            } else {
+              row.classList.remove("blacklisted-row");
+              if (originalStatus === "Active")
+                statusCell.innerHTML =
+                  '<span class="badge bg-success">Active</span>';
+              else if (originalStatus === "VIP")
+                statusCell.innerHTML =
+                  '<span class="badge bg-warning text-dark">VIP</span>';
+              else
+                statusCell.innerHTML =
+                  '<span class="badge bg-secondary">Inactive</span>';
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
