@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{shared/layout}"
+>
+  <body>
+    <div layout:fragment="content">
+      <main>
+        <div class="booking-form">
+          <!-- ảnh đại diện phòng -->
+          <div class="avatar">
+            <img
+              th:src="@{'/uploads/rooms/' + ${room.roomId} +'/' + ${room.imagesList[0].imageUrl}}"
+              alt="Room image"
+            />
+          </div>
+
+          <div class="form">
+            <div class="price">
+              <h1 th:text="'$' + ${room.price} + '/night'"></h1>
+              <div class="icon-group">
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star grey"></small>
+              </div>
+            </div>
+
+            <!-- form booking -->
+            <form
+              th:action="@{/booking/save}"
+              th:object="${booking}"
+              method="post"
+              class="form-detail"
+            >
+              <div class="form-title">
+                <hr />
+                <h1>Reservation</h1>
+                <hr />
+              </div>
+              <div class="font-text">
+                <!-- user info auto điền -->
+                <!-- <input type="hidden" th:field="*{room.id}" />
+                <input type="hidden" th:field="*{user.id}" /> -->
+
+                <label>Check-in</label>
+                <input type="date" class="form-control" required />
+
+                <label>Check-out</label>
+                <input type="date" class="form-control" required />
+
+                <label>Guest</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Number of guests"
+                  required
+                />
+
+                <button type="submit" class="btn btn-primary mt-3">
+                  Booking
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- overview -->
+        <div class="more-room overview-room">
+          <div class="gallery-image">
+            <img th:src="@{/img/galleryRoom1.png}" />
+            <img th:src="@{/img/galleryRoom2.png}" />
+            <img th:src="@{/img/galleryRoom3.png}" />
+          </div>
+
+          <div class="overview-detail">
+            <div class="overview-title">
+              <hr />
+              <h1>Overview</h1>
+              <hr />
+            </div>
+            <p th:text="'Max Guests: ' + ${room.capacity+2}"></p>
+            <p th:text="'Max Adults: ' + ${room.capacity}"></p>
+            <p th:text="${room.description}"></p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
