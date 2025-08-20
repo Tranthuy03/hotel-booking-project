@@ -1,5 +1,7 @@
 package com.hotel.hotelbooking.controller;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotel.hotelbooking.model.Booking;
+import com.hotel.hotelbooking.model.BookingStatus;
+import com.hotel.hotelbooking.model.User;
 import com.hotel.hotelbooking.service.BookingService;
+import com.hotel.hotelbooking.service.UserService;
 
 @Controller
 @RequestMapping("/booking")
@@ -24,6 +29,8 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/list")
     public String listBooking(@RequestParam(defaultValue = "0") int page,
@@ -39,14 +46,28 @@ public class BookingController {
 
     @GetMapping("/create")
     public String createBookingForm(Model model) {
+
         model.addAttribute("booking", new Booking());
+
         return "booking/create";
     }
 
     @PostMapping("/create")
-    public String saveBooking(@ModelAttribute("booking") Booking booking) {
+    public String saveBooking(@ModelAttribute("booking") Booking booking, Principal principal) {
+        // Lấy thông tin user đang đăng nhập
+        String email = principal.getName(); // Spring Security sẽ dùng email/username
+        User user = userService.findByEmail(email).orElseThrow();
+
+        // Gán user vào booking
+        booking.setUser(user);
+
+        // Các trường khác: status mặc định PENDING, createdAt...
+        booking.setStatus(BookingStatus.PENDING);
+        booking.setCreatedAt(LocalDateTime.now());
+        booking.setUpdatedAt(LocalDateTime.now());
+
         bookingService.saveBooking(booking);
-        return "redirect:/booking";
+        return "redirect:/booking/list";
     }
 
     @GetMapping("/edit/{id}")
@@ -56,19 +77,19 @@ public class BookingController {
             model.addAttribute("booking", bookingOpt.get());
             return "booking/edit";
         }
-        return "redirect:/booking";
+        return "redirect:/booking/list";
     }
 
     @PostMapping("/edit/{id}")
     public String editBooking(@PathVariable int id, @ModelAttribute("booking") Booking booking) {
         booking.setBookingId(id);
         bookingService.saveBooking(booking);
-        return "redirect:/booking";
+        return "redirect:/booking/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteBooking(@PathVariable int id) {
         bookingService.deleteBooking(id);
-        return "redirect:/booking";
+        return "redirect:/booking/list";
     }
 }

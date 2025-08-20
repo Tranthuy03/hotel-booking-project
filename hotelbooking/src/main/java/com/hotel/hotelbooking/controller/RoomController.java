@@ -92,7 +92,7 @@ public class RoomController {
         return "redirect:/room/list";
     }
 
-    @GetMapping("/room/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String editRoom(@PathVariable("id") int id, Model model) {
         Room room = roomService.getRoomById(id)
                 .orElseThrow(() -> new RuntimeException("Room not found"));
@@ -103,7 +103,7 @@ public class RoomController {
         return "room/edit";
     }
 
-    @PostMapping("/room/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateRoom(
             @PathVariable("id") int id,
             @ModelAttribute("room") Room roomForm,
@@ -156,7 +156,7 @@ public class RoomController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Update failed: " + e.getMessage());
         }
-        return "redirect:/room";
+        return "redirect:/room/list";
     }
 
     @GetMapping("/delete/{id}")
@@ -177,11 +177,11 @@ public class RoomController {
         Optional<Room> roomOpt = roomService.getRoomById(id);
 
         if (roomOpt.isEmpty()) {
-            return "redirect:/room/list"; // Nếu không tìm thấy phòng thì quay về danh sách
+            return "redirect:/room/list";
         }
 
         model.addAttribute("room", roomOpt.get());
-        return "room/detail"; // đường dẫn tới file templates/room/detail.html
+        return "room/detail";
     }
 
 }
