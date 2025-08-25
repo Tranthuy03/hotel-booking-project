@@ -82,12 +82,17 @@
 
 		<div class="form-box register">
 			<h2>Registration</h2>
-			<form  th:action="@{/auth/login}" method="post">
+			<form  th:action="@{/auth/register}" method="post">
+				<!-- <div class="input-box">
+					<span class="icon"><i class="fa-solid fa-user"></i></span>
+					<input type="text" name="firstName" required>
+					<label>First name</label>
+				</div>
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-user"></i></span>
-					<input type="text" name="username" required>
-					<label>User name</label>
-				</div>
+					<input type="text" name="lastName" required>
+					<label>Last name</label>
+				</div> -->
 				<div class="input-box">
 					<span class="icon"><i class="fa-solid fa-envelope"></i></span>
 					<input type="email" name="email" required>

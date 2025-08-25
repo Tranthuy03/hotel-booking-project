@@ -49,28 +49,35 @@ public class AuthController {
         }
     }
 
-    // Hiển thị form register
-    @GetMapping("/register")
-    public String registerPage(Model model) {
-        model.addAttribute("user", new User());
-        return "auth/register";
-    }
+    // // Hiển thị form register
+    // @GetMapping("/register")
+    // public String registerPage(Model model) {
+    //     model.addAttribute("user", new User());
+    //     return "auth/register";
+    // }
 
     // Xử lý đăng ký (gộp logic 2 method lại)
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model) {
+    public String registerUser(@ModelAttribute User user, HttpSession session, Model model) {
+        // Kiểm tra email trùng
         Optional<User> existingUser = userService.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             model.addAttribute("error", "Email already registered!");
-            return "auth/register";
+            return "redirect:/auth/login?tab=register";
         }
 
         // Gán role mặc định cho client (id=2)
-        Role clientRole = roleRepository.findById(2).orElse(new Role(2, "CLIENT"));
+        Role clientRole = roleRepository.findById(2)
+                        .orElse(new Role(2, "CLIENT"));
         user.setRole(clientRole);
 
-        userService.saveUser(user);
-        return "redirect:/auth/login?registered";
+        // Lưu user vào DB
+        User savedUser = userService.saveUser(user);
+        // Đăng nhập luôn (set session)
+        session.setAttribute("loggedUser", savedUser);
+
+        // Mặc định về home
+        return "redirect:/";
     }
 
     // Logout

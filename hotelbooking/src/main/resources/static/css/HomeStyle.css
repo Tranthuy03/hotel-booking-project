@@ -800,9 +800,9 @@ body.login {
   overflow: hidden;
   transition: height .2s ease;
 }
-.wrapper.active {
-  height: 470px;
-}
+/* .wrapper.active {
+  height: 500px;
+} */
 .wrapper .form-box.login {
   transition: transform .18s ease;
   transform: translateX(0);

@@ -81,8 +81,8 @@
                     th:href="@{/admin/dashboard}" class="nav-item nav-link">Admin</a>
                   <a th:if="${session.loggedUser == null}" th:href="@{/auth/login}" 
                   class="nav-item nav-link">Login</a>
-                  <a th:if="${session.loggedUser == null}" th:href="@{/auth/register}" 
-                  class="nav-item nav-link">Register</a>
+                  <!-- <a th:if="${session.loggedUser == null}" th:href="@{/auth/register}" 
+                  class="nav-item nav-link">Register</a> -->
 
                   <div th:if="${session.loggedUser != null}" class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
