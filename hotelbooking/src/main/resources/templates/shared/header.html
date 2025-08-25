@@ -77,15 +77,22 @@
                   <a th:href="@{/room/roomlistpage}" class="nav-item nav-link"
                     >Block</a
                   >
-                  <a th:href="@{/admin/dashboard}" class="nav-item nav-link"
-                    >Admin</a
-                  >
-                  <a th:href="@{/auth/login}" class="nav-item nav-link"
-                    >Login</a
-                  >
-                  <a th:href="@{/auth/register}" class="nav-item nav-link"
-                    >Register</a
-                  >
+                  <a th:if="${session.loggedUser != null and session.loggedUser.role.name == 'ADMIN'}"
+                    th:href="@{/admin/dashboard}" class="nav-item nav-link">Admin</a>
+                  <a th:if="${session.loggedUser == null}" th:href="@{/auth/login}" 
+                  class="nav-item nav-link">Login</a>
+                  <a th:if="${session.loggedUser == null}" th:href="@{/auth/register}" 
+                  class="nav-item nav-link">Register</a>
+
+                  <div th:if="${session.loggedUser != null}" class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                      <img th:src="@{'/img/' + ${session.loggedUser.avatarUrl}}" class="rounded-circle" style="width:30px;height:30px;" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item" th:href="@{/profile}">Profile</a>
+                      <a class="dropdown-item" th:href="@{/auth/logout}">Logout</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </nav>
