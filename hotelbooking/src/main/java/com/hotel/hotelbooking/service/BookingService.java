@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hotel.hotelbooking.model.Booking;
+import com.hotel.hotelbooking.model.BookingStatus;
 import com.hotel.hotelbooking.repository.BookingRepository;
 
 @Service
@@ -35,5 +36,12 @@ public class BookingService {
 
     public Page<Booking> getAllBookings(Pageable pageable) {
         return bookingRepository.findAll(pageable);
+    }
+    public Page<Booking> findByUser(int userId, Pageable pageable) {
+        return bookingRepository.findByUserUserId(userId, pageable);
+    }
+
+    public Page<Booking> findByUserAndStatus(int userId, BookingStatus status, Pageable pageable) {
+        return bookingRepository.findByUserUserIdAndStatus(userId, status, pageable);
     }
 }

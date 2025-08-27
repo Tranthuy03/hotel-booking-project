@@ -10,4 +10,5 @@ import com.hotel.hotelbooking.model.RoomStatus;
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     List<Room> findByStatus(RoomStatus status);
+    
 }

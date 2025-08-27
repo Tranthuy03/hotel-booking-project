@@ -3,6 +3,7 @@ package com.hotel.hotelbooking.controller;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotel.hotelbooking.model.Booking;
 import com.hotel.hotelbooking.model.BookingStatus;
+import com.hotel.hotelbooking.model.Room;
 import com.hotel.hotelbooking.model.User;
 import com.hotel.hotelbooking.service.BookingService;
 import com.hotel.hotelbooking.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/booking")
@@ -39,9 +43,58 @@ public class BookingController {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Booking> roomsPage = bookingService.getAllBookings(pageable);
-
+        
+        
         model.addAttribute("bookingList", roomsPage);
         return "booking/list";
+    }
+    @GetMapping("/HistoryUserBooking")
+    public String listUserBooking(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int size,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String status,
+            Model model, HttpSession session) {
+
+        User user = (User) session.getAttribute("loggedUser");
+        if (user == null) {
+            return "redirect:/auth/login";  // chưa login
+        }
+        
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Booking> bookingsPage;
+        
+        if (status != null && !status.isEmpty()) {   //lọc theo trạng thái
+            BookingStatus bookingStatus = BookingStatus.valueOf(status.toUpperCase());
+            bookingsPage = bookingService.findByUserAndStatus(user.getUserId(), bookingStatus, PageRequest.of(page, size));
+        } else {
+            bookingsPage = bookingService.findByUser(user.getUserId(), PageRequest.of(page, size));
+        }
+
+        model.addAttribute("bookingList", bookingsPage);
+        model.addAttribute("search", search);
+        model.addAttribute("statusFilter", status);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", bookingsPage.getTotalPages());
+        
+        return "booking/HistoryUserBooking";
+    }
+    @GetMapping("/detail/{id}")
+    public String bookingDetail(@PathVariable int id, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("loggedUser");
+        if (user == null) {
+            return "redirect:/auth/login"; // Chưa login thì chuyển về login
+        }
+
+        Booking booking = bookingService.getBookingById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        // Chỉ cho xem booking của chính mình
+        if (booking.getUser().getUserId() != user.getUserId()) {
+            return "redirect:/booking/HistoryUserBooking";
+        }
+
+        model.addAttribute("booking", booking);
+        return "booking/detail";
     }
 
     @GetMapping("/create")

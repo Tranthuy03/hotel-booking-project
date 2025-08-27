@@ -90,6 +90,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
                       <a class="dropdown-item" th:href="@{/profile}">Profile</a>
+                      <a th:if="${session.loggedUser != null and session.loggedUser.role.name == 'CLIENT'}" class="dropdown-item" th:href="@{/booking/HistoryUserBooking}">My Booking</a>
                       <a class="dropdown-item" th:href="@{/auth/logout}">Logout</a>
                     </div>
                   </div>

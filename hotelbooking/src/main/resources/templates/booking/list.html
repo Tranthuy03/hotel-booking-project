@@ -70,7 +70,6 @@
               </div>
             </div>
           </div>
-          <!-- ***************************************phần khác nhau nè *********************************** -->
           <!-- Table -->
           <div class="card">
             <div class="card-body">
@@ -91,189 +90,33 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            th:href="@{/booking/edit}"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+                    <tr th:each="booking : ${bookingList.content}">
+                        <td th:text="'BK' + ${#strings.pad(booking.bookingId, 3, '0')}">BK001</td>
+                        <td th:text="${booking.room.roomName}">Deluxe Ocean View</td>
+                        <td th:text="${booking.totalPrice} + '$'">100$</td>
+                        <td th:text="${booking.night} + ' nights'">2 nights</td>
+                        <td th:text="${#temporals.format(booking.checkInDate, 'yyyy-MM-dd')}">2025-08-20</td>
+                        <td th:text="${#temporals.format(booking.checkOutDate, 'yyyy-MM-dd')}">2025-08-25</td>
+                        <td>
+                            <span th:if="${booking.status.name() == 'CONFIRMED'}" 
+                                class="badge bg-success">Confirmed</span>
+                            <span th:if="${booking.status.name() == 'PENDING'}" 
+                                class="badge bg-warning">Pending</span>
+                            <span th:if="${booking.status.name() == 'CANCELLED'}" 
+                                class="badge bg-danger">Cancelled</span>
+                        </td>
+                        <td class="text-center">
+                            <div class="actions">
+                                <a th:href="@{/booking/details/} + ${booking.bookingId}" 
+                                class="btn btn-sm btn-success">View details</a>
+                                <a th:href="@{/booking/delete/} + ${booking.bookingId}" 
+                                class="btn btn-sm btn-danger" 
+                                onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
+                            </div>
+                        </td>
                     </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>BK001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>Deluxe Ocean View</td>
-                      <td>2025-08-20</td>
-                      <td>2025-08-25</td>
-                      <td><span class="badge bg-success">Confirmed</span></td>
-                      <td class="text-center">
-                        <div class="actions">
-                          <button class="btn btn-sm btn-success btn-confirm">
-                            Confirm
-                          </button>
-                          <a
-                            href="EditBooking.html?"
-                            class="btn btn-sm btn-warning text-white"
-                            >Edit</a
-                          >
-                          <button class="btn btn-sm btn-danger btn-delete">
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+                    <tr th:if="${bookingList.empty}">
+                        <td colspan="8" class="text-center">No bookings found</td>
                     </tr>
                   </tbody>
                 </table>
@@ -303,7 +146,7 @@
                   >
                     <a
                       class="page-link"
-                      th:href="@{/room/list(page=${i}, size=${bookingList.size})}"
+                      th:href="@{/booking/list(page=${i}, size=${bookingList.size})}"
                       th:text="${i + 1}"
                     ></a>
                   </li>

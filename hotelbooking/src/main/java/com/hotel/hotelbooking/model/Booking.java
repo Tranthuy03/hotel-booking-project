@@ -29,6 +29,7 @@ public class Booking {
     private LocalDate checkOutDate;
 
     private double totalPrice;
+    private int night;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

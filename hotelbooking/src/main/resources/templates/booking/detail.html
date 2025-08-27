@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{shared/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Detail</title>
+  <link rel="stylesheet" href="/css/BookingStyle.css">
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container py-4">
+    <h1 class="booking-title">Booking Reservation details</h1>
+
+    <div class="booking-action">
+      <p>Booking ID:</p>
+      <p th:text="'BK' + ${booking.bookingId}"></p>
+      <span th:classappend="${booking.status.name() == 'CONFIRMED'} ? 'badge bg-success' 
+              : (booking.status.name() == 'PENDING'} ? 'badge bg-warning' : 'badge bg-danger' "
+            th:text="${booking.status}"></span>
+    </div>
+
+    <div class="card h-100 card-color">
+      <div class="card-body">
+        <div class="row gy-3">
+          <!-- Left -->
+          <div class="col-12 col-md-6">
+            <div class="Detail">
+              <p>Guest name:</p>
+              <p class="active" th:text="${booking.user.fullName}"></p>
+            </div>
+            <div class="Detail">
+              <p>Phone:</p>
+              <p th:text="${booking.user.phone}"></p>
+            </div>
+            <div class="Detail">
+              <p>Email:</p>
+              <p th:text="${booking.user.email}"></p>
+            </div>
+            <div class="Detail">
+              <p>Notepad:</p>
+              <p th:text="${booking.note}">—</p>
+            </div>
+          </div>
+
+          <!-- Right -->
+          <div class="col-12 col-md-6">
+            <div class="Detail booking">
+              <p>Booking Code:</p>
+              <p th:text="${booking.bookingId}"></p>
+            </div>
+            <div class="Detail booking">
+              <p>Room:</p>
+              <p th:text="${booking.room.roomName}"></p>
+            </div>
+            <div class="Detail booking">
+              <p>Check-in:</p>
+              <p th:text="${booking.checkInDate}"></p>
+            </div>
+            <div class="Detail booking">
+              <p>Check-out:</p>
+              <p th:text="${booking.checkOutDate}"></p>
+            </div>
+            <div class="Detail booking">
+              <p>Length of stay:</p>
+              <p th:text="${booking.night} + ' nights'"></p>
+            </div>
+            <div class="Detail booking">
+              <p>Total guests:</p>
+              <p th:text="${booking.totalGuests}"></p>
+            </div>
+            <div class="Detail booking">
+              <p>Total price:</p>
+              <p th:text="${booking.totalPrice} + '$'"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back button -->
+    <div class="mt-3">
+      <a th:href="@{/booking/HistoryUserBooking}" class="btn btn-secondary">Back to My Booking</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

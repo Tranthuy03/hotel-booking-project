@@ -923,3 +923,36 @@ body.login {
 .login-register p a:hover {
   text-decoration: underline;
 }
+/*Hitory booking user page*/
+table.table th {
+  color: #fff !important;
+  font-weight: 700;
+  background-color: #be9c52 !important;
+}
+.container-fluid.py-4 {
+  margin-bottom: 60px;
+}
+/*Booking Detail Page*/
+h1.booking-title {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+div.booking-action {
+  display: flex;
+  gap: 5px;
+}
+span.mt-3 {
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+}
+.Detail p.active {
+  font-size: 22px;
+  font-weight: bold;
+}
+.Detail p:nth-child(1) {
+  color: #b4b4b4;
+}
+.Detail.booking {
+  display: flex;
+  gap: 8px;
+}
