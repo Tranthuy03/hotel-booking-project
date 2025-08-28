@@ -30,6 +30,8 @@ public class Booking {
 
     private double totalPrice;
     private int night;
+    private int numGuest;
+    private String note;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

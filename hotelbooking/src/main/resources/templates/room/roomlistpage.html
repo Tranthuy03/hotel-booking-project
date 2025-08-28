@@ -157,7 +157,11 @@
                       <div
                         class="d-flex justify-content-between align-items-center"
                       >
-                        <button class="btn book-btn btn-sm">BOOK NOW</button>
+                        <a
+                          th:href="@{/booking/create}"
+                          class="btn book-btn btn-sm"
+                          >BOOK NOW</a
+                        >
                         <a
                           th:href="@{/room/detail/{id}(id=${room.roomId})}"
                           class="more-link"

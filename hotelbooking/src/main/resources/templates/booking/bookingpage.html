@@ -12,86 +12,101 @@
       <main>
         <div class="booking-container">
           <h1>Hotel Booking</h1>
-          <form class="booking-form">
+
+          <!-- Form Booking -->
+          <form
+            class="booking-form"
+            th:action="@{/booking/create}"
+            th:object="${booking}"
+            method="post"
+          >
+            <!-- Full name + Phone -->
             <div class="form-row">
               <div class="form-group">
                 <label>Full name</label>
-                <input type="text" placeholder="First Name Last Name" />
+                <input
+                  type="text"
+                  th:field="*{fullName}"
+                  placeholder="First Name Last Name"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label>Phone number</label>
-                <input type="text" placeholder="" />
+                <input
+                  type="text"
+                  th:field="*{phone}"
+                  placeholder="Phone number"
+                  required
+                />
               </div>
             </div>
 
+            <!-- Room type + Guests -->
             <div class="form-row">
               <div class="form-group">
                 <label>Room Type</label>
-                <select>
-                  <option>Please Select</option>
+                <select th:field="*{roomType}" required>
+                  <option value="">Please Select</option>
+                  <option value="SINGLE">Single</option>
+                  <option value="DOUBLE">Double</option>
+                  <option value="DELUXE">Deluxe</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Number of guest</label>
-                <input type="text" placeholder="e.g. 2-4" />
+                <label>Number of guests</label>
+                <input
+                  type="number"
+                  th:field="*{guestCount}"
+                  placeholder="e.g. 2"
+                  min="1"
+                  required
+                />
               </div>
             </div>
 
+            <!-- Arrival + Departure -->
             <div class="form-row">
               <div class="form-group">
-                <label>Arrival Date & Time</label>
-                <div class="date-time">
-                  <input type="date" />
-                </div>
+                <label>Arrival Date</label>
+                <input type="date" th:field="*{arrivalDate}" required />
               </div>
-              <div class="form-group">
-                <label> Check In</label>
-                <p>14:00</p>
-              </div>
-            </div>
-
-            <div class="form-row">
               <div class="form-group">
                 <label>Departure Date</label>
-                <div class="date-time"><input type="date" /></div>
-              </div>
-              <div class="form-group">
-                <label> Check Out</label>
-                <p>12:00</p>
+                <input type="date" th:field="*{departureDate}" required />
               </div>
             </div>
 
-            <!-- <div class="form-row">
-          <div class="form-group">
-            <label>Vehicle Booking</label>
-            <select>
-              <option>Please select a vehicle</option>
-            </select>
-          </div>
-        </div> -->
-
+            <!-- Pickup -->
             <div class="form-row">
               <div class="form-group pickup">
                 <label>Free Pickup?</label>
                 <div class="radio-group">
-                  <label
-                    ><input type="radio" name="pickup" /> Yes Please! - Pick me
-                    up on arrival</label
-                  >
-                  <label
-                    ><input type="radio" name="pickup" /> No Thanks! - I'll make
-                    my own way there</label
-                  >
+                  <label>
+                    <input type="radio" th:field="*{pickup}" value="YES" />
+                    Yes Please! - Pick me up on arrival
+                  </label>
+                  <label>
+                    <input type="radio" th:field="*{pickup}" value="NO" />
+                    No Thanks! - I'll make my own way there
+                  </label>
                 </div>
               </div>
             </div>
+
+            <!-- Special Requests -->
             <div class="form-row">
               <div class="form-group full-width">
                 <label>Special Requests</label>
-                <textarea placeholder="Type here"></textarea>
+                <textarea
+                  th:field="*{specialRequest}"
+                  placeholder="Type here"
+                  rows="4"
+                ></textarea>
               </div>
             </div>
 
+            <!-- Submit -->
             <div class="form-row">
               <button type="submit" class="submit-btn">Booking</button>
             </div>

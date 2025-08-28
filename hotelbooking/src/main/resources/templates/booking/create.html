@@ -3,7 +3,7 @@
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{shared/adminlayout}"
+  layout:decorate="~{shared/layout}"
 >
   <body>
     <div layout:fragment="content">
@@ -33,6 +33,16 @@
                 th:object="${booking}"
                 method="post"
               >
+              <!-- Chọn phòng -->
+                <div class="mb-3">
+                    <label class="form-label">Room</label>
+                    <select class="form-select" th:field="*{room}">
+                        <option th:each="room : ${roomList}"
+                                th:value="${room.roomId}"
+                                th:text="${room.roomNumber + ' - ' + room.price}">
+                        </option>
+                    </select>
+                </div>
                 <div class="row g-3">
                   <div class="col-md-4">
                     <label class="form-label">Check-in Date</label>
@@ -54,50 +64,17 @@
                     />
                   </div>
 
-                  <div class="col-md-4">
-                    <label class="form-label">Total Price</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      th:field="*{totalPrice}"
-                      required
-                    />
-                  </div>
-
-                  <div class="col-md-4">
-                    <label class="form-label">Status</label>
-                    <select class="form-select" th:field="*{status}">
-                      <option
-                        th:each="s : ${statuses}"
-                        th:value="${s}"
-                        th:text="${s}"
-                      ></option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label class="form-label">User</label>
-                    <select class="form-select" th:field="*{user}">
-                      <option
-                        th:each="u : ${users}"
-                        th:value="${u}"
-                        th:text="${u.fullName}"
-                      ></option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label class="form-label">Room</label>
-                    <select class="form-select" th:field="*{room}">
-                      <option
-                        th:each="r : ${rooms}"
-                        th:value="${r}"
-                        th:text="${r.roomNo}"
-                      ></option>
-                    </select>
-                  </div>
+                <div class="mb-3">
+                    <label class="form-label">Number of guests</label>
+                    <input type="number" class="form-control" th:field="*{numGuest}" min="1" required>
                 </div>
+
+                <!-- Yêu cầu đặc biệt -->
+                <div class="mb-3">
+                    <label class="form-label">Note: </label>
+                    <textarea class="form-control" rows="3" th:field="*{note}"></textarea>
+                </div>
+
 
                 <hr class="my-4" />
 

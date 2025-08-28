@@ -1,9 +1,8 @@
 package com.hotel.hotelbooking.controller;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +22,7 @@ import com.hotel.hotelbooking.model.BookingStatus;
 import com.hotel.hotelbooking.model.Room;
 import com.hotel.hotelbooking.model.User;
 import com.hotel.hotelbooking.service.BookingService;
+import com.hotel.hotelbooking.service.RoomService;
 import com.hotel.hotelbooking.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +36,9 @@ public class BookingController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoomService roomService;
+
     @GetMapping("/list")
     public String listBooking(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "8") int size,
@@ -43,11 +46,11 @@ public class BookingController {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<Booking> roomsPage = bookingService.getAllBookings(pageable);
-        
-        
+
         model.addAttribute("bookingList", roomsPage);
         return "booking/list";
     }
+
     @GetMapping("/HistoryUserBooking")
     public String listUserBooking(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "8") int size,
@@ -59,10 +62,10 @@ public class BookingController {
         if (user == null) {
             return "redirect:/auth/login";  // chưa login
         }
-        
+
         Pageable pageable = PageRequest.of(page, size);
         Page<Booking> bookingsPage;
-        
+
         if (status != null && !status.isEmpty()) {   //lọc theo trạng thái
             BookingStatus bookingStatus = BookingStatus.valueOf(status.toUpperCase());
             bookingsPage = bookingService.findByUserAndStatus(user.getUserId(), bookingStatus, PageRequest.of(page, size));
@@ -75,9 +78,10 @@ public class BookingController {
         model.addAttribute("statusFilter", status);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bookingsPage.getTotalPages());
-        
+
         return "booking/HistoryUserBooking";
     }
+
     @GetMapping("/detail/{id}")
     public String bookingDetail(@PathVariable int id, Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
@@ -98,29 +102,31 @@ public class BookingController {
     }
 
     @GetMapping("/create")
-    public String createBookingForm(Model model) {
-
+    public String createBookingForm(Model model, HttpSession session) {
+        User loggedUser = (User) session.getAttribute("loggedUser");
+        if (loggedUser == null) {
+            return "redirect:/auth/login"; // chưa login
+        }
+        List<Room> rooms = roomService.getAllRoom();
+        model.addAttribute("roomList", rooms);
         model.addAttribute("booking", new Booking());
-
         return "booking/create";
     }
 
     @PostMapping("/create")
-    public String saveBooking(@ModelAttribute("booking") Booking booking, Principal principal) {
-        // Lấy thông tin user đang đăng nhập
-        String email = principal.getName(); // Spring Security sẽ dùng email/username
-        User user = userService.findByEmail(email).orElseThrow();
+    public String saveBooking(@ModelAttribute("booking") Booking booking, HttpSession session) {
+        User loggedUser = (User) session.getAttribute("loggedUser");
+        if (loggedUser == null) {
+            return "redirect:/auth/login";
+        }
 
-        // Gán user vào booking
-        booking.setUser(user);
-
-        // Các trường khác: status mặc định PENDING, createdAt...
+        booking.setUser(loggedUser);
         booking.setStatus(BookingStatus.PENDING);
         booking.setCreatedAt(LocalDateTime.now());
         booking.setUpdatedAt(LocalDateTime.now());
 
         bookingService.saveBooking(booking);
-        return "redirect:/booking/list";
+        return "redirect:/room/roomlistpage";
     }
 
     @GetMapping("/edit/{id}")
