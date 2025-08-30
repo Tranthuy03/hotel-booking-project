@@ -25,7 +25,7 @@
           <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0">
               <li class="breadcrumb-item">
-                <a href="BookingManagement.html">Bookings</a>
+                <a th:href="@{/bookings}">Bookings</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
                 Edit Booking
@@ -36,43 +36,49 @@
           <!-- Form card -->
           <div class="card">
             <div class="card-body">
-              <form id="editBookingForm" novalidate>
+              <form
+                th:action="@{/booking/update/{id}(id=${booking.bookingId})}"
+                th:object="${booking}"
+                method="post"
+                id="editBookingForm"
+                novalidate
+              >
                 <div class="row g-3">
+                  <!-- Booking ID -->
                   <div class="col-12 col-lg-6">
                     <label class="form-label">Booking ID</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="bookingId"
+                      th:field="*{bookingId}"
                       readonly
-                      value="BK001"
                     />
                   </div>
 
                   <div class="col-12 col-lg-6">
-                    <label class="form-label">Customer Name</label>
+                    <label class="form-label">Customer Last Name</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="customerName"
-                      placeholder="Customer full name"
+                      th:field="*{user.lastName}"
+                      placeholder="Customer Last Name"
                       required
                     />
                     <div class="invalid-feedback">
-                      Please enter customer name.
+                      Please enter customer Email.
                     </div>
                   </div>
 
+                  <!-- Room -->
                   <div class="col-12 col-lg-6">
                     <label class="form-label">Room</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="roomName"
-                      placeholder="e.g. Deluxe Room, Suite..."
-                      required
-                    />
-                    <div class="invalid-feedback">Please enter room name.</div>
+                    <select class="form-select" th:field="*{room.roomId}">
+                      <option
+                        th:each="room : ${roomList}"
+                        th:value="${room.roomId}"
+                        th:text="${room.roomNumber + ' - ' + room.price}"
+                      ></option>
+                    </select>
                   </div>
 
                   <!-- Guests -->
@@ -82,8 +88,7 @@
                       type="number"
                       min="1"
                       class="form-control"
-                      id="guests"
-                      value="2"
+                      th:field="*{numGuest}"
                       required
                     />
                     <div class="invalid-feedback">
@@ -91,98 +96,82 @@
                     </div>
                   </div>
 
-                  <!-- Quick set status -->
+                  <!-- Status -->
                   <div class="col-6 col-md-9 col-lg-4">
-                    <label class="form-label d-flex align-items-center gap-2">
-                      <span>Status</span>
-                    </label>
-
-                    <!-- hidden input for submitting -->
-                    <input
-                      type="hidden"
-                      id="statusValue"
-                      name="status"
-                      value="Confirmed"
-                    />
-
-                    <div class="status-group d-flex nowrap-row">
-                      <button
-                        type="button"
-                        class="btn btn-sm status-btn status-confirmed active"
-                        data-status="Confirmed"
+                    <label for="status">Status:</label>
+                    <select name="status" id="status" class="form-control">
+                      <option
+                        value="PENDING"
+                        th:selected="${booking.status == 'PENDING'}"
                       >
-                        <i class="bi bi-check-circle me-1"></i> Confirmed
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm status-btn status-pending"
-                        data-status="Pending"
+                        Pending
+                      </option>
+                      <option
+                        value="CONFIRMED"
+                        th:selected="${booking.status == 'CONFIRMED'}"
                       >
-                        <i class="bi bi-hourglass-split me-1"></i> Pending
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm status-btn status-cancelled"
-                        data-status="Cancelled"
+                        Confirmed
+                      </option>
+                      <option
+                        value="CANCELLED"
+                        th:selected="${booking.status == 'CANCELLED'}"
                       >
-                        <i class="bi bi-x-circle me-1"></i> Cancelled
-                      </button>
-                    </div>
+                        Cancelled
+                      </option>
+                    </select>
                   </div>
-                  <!-- /Quick set status -->
 
+                  <!-- Check-in -->
                   <div class="col-12 col-lg-3">
                     <label class="form-label">Check-in</label>
                     <input
                       type="date"
                       class="form-control"
-                      id="checkIn"
+                      th:field="*{checkInDate}"
                       required
                     />
-                    <div class="invalid-feedback">
-                      Please choose check-in date.
-                    </div>
                   </div>
 
+                  <!-- Check-out -->
                   <div class="col-12 col-lg-3">
                     <label class="form-label">Check-out</label>
                     <input
                       type="date"
                       class="form-control"
-                      id="checkOut"
+                      th:field="*{checkOutDate}"
                       required
                     />
-                    <div class="invalid-feedback">
-                      Check-out must be after or equal to check-in.
-                    </div>
                   </div>
 
+                  <!-- Notes -->
                   <div class="col-12">
                     <label class="form-label">Notes</label>
                     <textarea
                       class="form-control"
-                      id="notes"
                       rows="3"
+                      th:field="*{note}"
                       placeholder="Optional notes..."
                     ></textarea>
                   </div>
                 </div>
+
+                <!-- Actions -->
+                <div class="action-buttons mt-3">
+                  <a th:href="@{/bookings}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Cancel
+                  </a>
+                  <button
+                    th:formaction="@{/bookings/delete/{id}(id=${booking.bookingId})}"
+                    class="btn btn-danger btn-icon"
+                  >
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                  <button type="submit" class="btn btn-primary btn-icon">
+                    <i class="bi bi-save"></i> Save
+                  </button>
+                </div>
               </form>
             </div>
-          </div>
-
-          <!-- actions -->
-
-          <div class="action-buttons">
-            <a href="" class="btn btn-outline-secondary">
-              <i class="bi bi-arrow-left"></i> Cancel
-            </a>
-            <button class="btn btn-danger btn-icon" id="btnOpenDeleteModal">
-              <i class="bi bi-trash"></i> Delete
-            </button>
-            <button class="btn btn-primary btn-icon" id="btnSave">
-              <i class="bi bi-save"></i> Save
-            </button>
           </div>
         </div>
       </main>

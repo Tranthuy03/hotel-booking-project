@@ -1,6 +1,6 @@
 package com.hotel.hotelbooking.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,27 +122,59 @@ public class BookingController {
 
         booking.setUser(loggedUser);
         booking.setStatus(BookingStatus.PENDING);
-        booking.setCreatedAt(LocalDateTime.now());
-        booking.setUpdatedAt(LocalDateTime.now());
+        booking.setCreatedAt(LocalDate.now());
+        booking.setUpdatedAt(LocalDate.now());
 
         bookingService.saveBooking(booking);
         return "redirect:/room/roomlistpage";
     }
 
     @GetMapping("/edit/{id}")
-    public String editBookingForm(@PathVariable int id, Model model) {
+    public String editBooking(@PathVariable("id") int id, Model model) {
         Optional<Booking> bookingOpt = bookingService.getBookingById(id);
         if (bookingOpt.isPresent()) {
             model.addAttribute("booking", bookingOpt.get());
+
+            // thêm roomList vào model
+            List<Room> rooms = roomService.getAllRoom();
+            model.addAttribute("roomList", rooms);
+
+            // thêm enum status vào model (nếu có select status)
+            model.addAttribute("statusList", BookingStatus.values());
+
             return "booking/edit";
         }
         return "redirect:/booking/list";
     }
 
-    @PostMapping("/edit/{id}")
-    public String editBooking(@PathVariable int id, @ModelAttribute("booking") Booking booking) {
-        booking.setBookingId(id);
-        bookingService.saveBooking(booking);
+    @PostMapping("/update/{id}")
+    public String updateBooking(@PathVariable("id") Integer id,
+            @ModelAttribute("booking") Booking updatedBooking) {
+        Optional<Booking> existingOpt = bookingService.getBookingById(id);
+        if (existingOpt.isPresent()) {
+            Booking existingBooking = existingOpt.get();
+
+            // update các field
+            existingBooking.setCheckInDate(updatedBooking.getCheckInDate());
+            existingBooking.setCheckOutDate(updatedBooking.getCheckOutDate());
+            existingBooking.setRoom(updatedBooking.getRoom());
+            existingBooking.setNumGuest(updatedBooking.getNumGuest());
+            existingBooking.setStatus(updatedBooking.getStatus());
+            existingBooking.setNote(updatedBooking.getNote());
+            existingBooking.setUpdatedAt(LocalDate.now());
+
+            // gán room an toàn
+            if (updatedBooking.getRoom() != null && updatedBooking.getRoom().getRoomId() > 0) {
+                Room room = roomService.getRoomById(updatedBooking.getRoom().getRoomId())
+                        .orElseThrow(() -> new RuntimeException("Room not found"));
+                existingBooking.setRoom(room);
+            }
+
+            existingBooking.setUpdatedAt(LocalDate.now());
+
+            bookingService.saveBooking(existingBooking);
+        }
+
         return "redirect:/booking/list";
     }
 

@@ -1,7 +1,8 @@
 package com.hotel.hotelbooking.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,17 +24,20 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bookingId;
+    private Integer bookingId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkInDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOutDate;
 
     private double totalPrice;
     private int night;
     private int numGuest;
     private String note;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
