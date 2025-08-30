@@ -68,9 +68,17 @@ public class BookingController {
 
         if (status != null && !status.isEmpty()) {   //lọc theo trạng thái
             BookingStatus bookingStatus = BookingStatus.valueOf(status.toUpperCase());
-            bookingsPage = bookingService.findByUserAndStatus(user.getUserId(), bookingStatus, PageRequest.of(page, size));
+            if (search != null && !search.isEmpty()) {
+                bookingsPage = bookingService.findByUserAndStatusAndRoomName(user.getUserId(), bookingStatus, search, pageable);
+            } else {
+                bookingsPage = bookingService.findByUserAndStatus(user.getUserId(), bookingStatus, pageable);
+            }
         } else {
-            bookingsPage = bookingService.findByUser(user.getUserId(), PageRequest.of(page, size));
+            if (search != null && !search.isEmpty()) {
+                bookingsPage = bookingService.findByUserAndRoomName(user.getUserId(), search, pageable);
+            } else {
+                bookingsPage = bookingService.findByUser(user.getUserId(), pageable);
+            }
         }
 
         model.addAttribute("bookingList", bookingsPage);

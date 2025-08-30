@@ -36,4 +36,5 @@ public class RoomService {
     public Page<Room> getAllRoom(Pageable pageable) {
         return roomRepository.findAll(pageable);
     }
+    
 }

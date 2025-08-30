@@ -44,4 +44,12 @@ public class BookingService {
     public Page<Booking> findByUserAndStatus(int userId, BookingStatus status, Pageable pageable) {
         return bookingRepository.findByUserUserIdAndStatus(userId, status, pageable);
     }
+    public Page<Booking> findByUserAndRoomName(int userId, String roomName, Pageable pageable) {
+    return bookingRepository.findByUserUserIdAndRoomRoomNameContainingIgnoreCase(userId, roomName, pageable);
+    }
+
+    public Page<Booking> findByUserAndStatusAndRoomName(int userId, BookingStatus status, String roomName, Pageable pageable) {
+        return bookingRepository.findByUserUserIdAndStatusAndRoomRoomNameContainingIgnoreCase(userId, status, roomName, pageable);
+    }
+
 }
