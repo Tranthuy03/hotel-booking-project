@@ -201,7 +201,7 @@ body {
 /* ************************************************************************Ket thuc dung chung cho trang Admin */
 
 /* ==== Page Layout ==== */
-body {
+body.adminLayout {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 40px 0;
