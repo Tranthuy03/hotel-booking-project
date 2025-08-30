@@ -21,7 +21,7 @@
 
         <div class="container-fluid py-4">
           <div class="Add-button">
-            <a href="NewBooking.html" class="btn btn-primary btn-icon">
+            <a th:href="@{/user/create}" class="btn btn-primary btn-icon">
               <i class="bi bi-plus-lg"></i> Add New Customer
             </a>
           </div>
@@ -80,25 +80,37 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Phone</th>
-                      <th>Total Bookings</th>
+
                       <th>Status</th>
                       <th class="text-center">Edit</th>
                       <th class="text-center">Blacklist</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>CUS001</td>
-                      <td>Johnathan Alexander Doe</td>
-                      <td>johnathan.doe@example.com</td>
-                      <td>+1 202-555-0134</td>
-                      <td>12</td>
-                      <td class="status-cell" data-original-status="Active">
-                        <span class="badge bg-success">Active</span>
+                    <tr th:each="user : ${userList}">
+                      <td th:text="${user.userId}"></td>
+                      <td
+                        th:text="${user.firstName + ' ' + user.lastName}"
+                      ></td>
+                      <td th:text="${user.email}"></td>
+                      <td th:text="${user.phone}"></td>
+
+                      <td
+                        class="status-cell"
+                        th:data-original-status="${user.enabled ? 'Active' : 'Inactive'}"
+                      >
+                        <span th:if="${user.enabled}" class="badge bg-success"
+                          >Active</span
+                        >
+                        <span
+                          th:if="${!user.enabled}"
+                          class="badge bg-secondary"
+                          >Inactive</span
+                        >
                       </td>
                       <td class="text-center">
                         <a
-                          th:href="@{/user/detail}"
+                          th:href="@{/user/detail/{id}(id=${user.userId})}"
                           class="btn btn-sm btn-info text-white"
                           ><i class="bi bi-eye"></i> Edit</a
                         >
@@ -107,10 +119,10 @@
                         <input
                           type="checkbox"
                           class="form-check-input blacklist-checkbox"
+                          th:checked="${!user.enabled}"
                         />
                       </td>
                     </tr>
-                    <!-- Thêm nhiều hàng mẫu ở đây -->
                   </tbody>
                 </table>
               </div>
@@ -125,7 +137,7 @@
                   >
                     <a
                       class="page-link"
-                      th:href="@{/room/list(page=${userList.number - 1}, size=${userList.size})}"
+                      th:href="@{/user/list(page=${userList.number - 1}, size=${userList.size})}"
                     >
                       &laquo;
                     </a>
@@ -139,7 +151,7 @@
                   >
                     <a
                       class="page-link"
-                      th:href="@{/room/list(page=${i}, size=${userList.size})}"
+                      th:href="@{/user/list(page=${i}, size=${userList.size})}"
                       th:text="${i + 1}"
                     ></a>
                   </li>
@@ -151,7 +163,7 @@
                   >
                     <a
                       class="page-link"
-                      th:href="@{/room/list(page=${userList.number + 1}, size=${userList.size})}"
+                      th:href="@{/user/list(page=${userList.number + 1}, size=${userList.size})}"
                     >
                       &raquo;
                     </a>
